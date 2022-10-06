@@ -1,0 +1,11 @@
+C:\Programmering 2\C#\Oförberättprov Klasser\Oförberättprov Klasser\bin\Debug\Oförberättprov Klasser.exe.config
+C:\Programmering 2\C#\Oförberättprov Klasser\Oförberättprov Klasser\bin\Debug\Oförberättprov Klasser.exe
+C:\Programmering 2\C#\Oförberättprov Klasser\Oförberättprov Klasser\bin\Debug\Oförberättprov Klasser.pdb
+C:\Programmering 2\C#\Oförberättprov Klasser\Oförberättprov Klasser\obj\Debug\Oförberättprov Klasser.csproj.AssemblyReference.cache
+C:\Programmering 2\C#\Oförberättprov Klasser\Oförberättprov Klasser\obj\Debug\Oförberättprov Klasser.csproj.SuggestedBindingRedirects.cache
+C:\Programmering 2\C#\Oförberättprov Klasser\Oförberättprov Klasser\obj\Debug\Oförberättprov_Klasser.Form1.resources
+C:\Programmering 2\C#\Oförberättprov Klasser\Oförberättprov Klasser\obj\Debug\Oförberättprov_Klasser.Properties.Resources.resources
+C:\Programmering 2\C#\Oförberättprov Klasser\Oförberättprov Klasser\obj\Debug\Oförberättprov Klasser.csproj.GenerateResource.cache
+C:\Programmering 2\C#\Oförberättprov Klasser\Oförberättprov Klasser\obj\Debug\Oförberättprov Klasser.csproj.CoreCompileInputs.cache
+C:\Programmering 2\C#\Oförberättprov Klasser\Oförberättprov Klasser\obj\Debug\Oförberättprov Klasser.exe
+C:\Programmering 2\C#\Oförberättprov Klasser\Oförberättprov Klasser\obj\Debug\Oförberättprov Klasser.pdb
