@@ -1,0 +1,11 @@
+C:\Users\emilz\Source\Repos\EmilZackrisson\Programmering2\My XL\My XL\bin\Debug\My XL.exe.config
+C:\Users\emilz\Source\Repos\EmilZackrisson\Programmering2\My XL\My XL\bin\Debug\My XL.exe
+C:\Users\emilz\Source\Repos\EmilZackrisson\Programmering2\My XL\My XL\bin\Debug\My XL.pdb
+C:\Users\emilz\Source\Repos\EmilZackrisson\Programmering2\My XL\My XL\obj\Debug\My XL.csproj.AssemblyReference.cache
+C:\Users\emilz\Source\Repos\EmilZackrisson\Programmering2\My XL\My XL\obj\Debug\My XL.csproj.SuggestedBindingRedirects.cache
+C:\Users\emilz\Source\Repos\EmilZackrisson\Programmering2\My XL\My XL\obj\Debug\My_XL.Form1.resources
+C:\Users\emilz\Source\Repos\EmilZackrisson\Programmering2\My XL\My XL\obj\Debug\My_XL.Properties.Resources.resources
+C:\Users\emilz\Source\Repos\EmilZackrisson\Programmering2\My XL\My XL\obj\Debug\My XL.csproj.GenerateResource.cache
+C:\Users\emilz\Source\Repos\EmilZackrisson\Programmering2\My XL\My XL\obj\Debug\My XL.csproj.CoreCompileInputs.cache
+C:\Users\emilz\Source\Repos\EmilZackrisson\Programmering2\My XL\My XL\obj\Debug\My XL.exe
+C:\Users\emilz\Source\Repos\EmilZackrisson\Programmering2\My XL\My XL\obj\Debug\My XL.pdb
