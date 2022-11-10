@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32811.315
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Klass", "Klass\Klass.csproj", "{1B86653A-811C-495F-831C-C7BB7C78E911}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Övning 1.5 Fordonsregister", "Övning 1.5 Fordonsregister\Övning 1.5 Fordonsregister.csproj", "{CADF4F22-5D3C-4CAB-ADD6-FB540B901F05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enum", "Enum\Enum.csproj", "{D21E7571-1278-4129-9CB9-91D033E5BC12}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1B86653A-811C-495F-831C-C7BB7C78E911}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B86653A-811C-495F-831C-C7BB7C78E911}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B86653A-811C-495F-831C-C7BB7C78E911}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CADF4F22-5D3C-4CAB-ADD6-FB540B901F05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CADF4F22-5D3C-4CAB-ADD6-FB540B901F05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CADF4F22-5D3C-4CAB-ADD6-FB540B901F05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CADF4F22-5D3C-4CAB-ADD6-FB540B901F05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D21E7571-1278-4129-9CB9-91D033E5BC12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D21E7571-1278-4129-9CB9-91D033E5BC12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D21E7571-1278-4129-9CB9-91D033E5BC12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E195EE48-F564-4D6B-BB0E-CBAA89481986}
+	EndGlobalSection
+EndGlobal

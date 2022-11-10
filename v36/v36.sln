@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32811.315
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Övning 1.3", "Övning 1.3\Övning 1.3.csproj", "{2C2DD602-7FC0-4CFA-94EE-8C975F265339}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Övning 1.4", "Övning 1.4\Övning 1.4.csproj", "{F9E5ED02-7203-44FB-9C59-D343EFDEF32C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2C2DD602-7FC0-4CFA-94EE-8C975F265339}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C2DD602-7FC0-4CFA-94EE-8C975F265339}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C2DD602-7FC0-4CFA-94EE-8C975F265339}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C2DD602-7FC0-4CFA-94EE-8C975F265339}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9E5ED02-7203-44FB-9C59-D343EFDEF32C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9E5ED02-7203-44FB-9C59-D343EFDEF32C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9E5ED02-7203-44FB-9C59-D343EFDEF32C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9E5ED02-7203-44FB-9C59-D343EFDEF32C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5DEEA193-6466-4CF0-9975-066603B81D06}
+	EndGlobalSection
+EndGlobal
