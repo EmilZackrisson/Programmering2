@@ -82,21 +82,21 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -146,7 +146,6 @@
             this.rdbRowSel.Name = "rdbRowSel";
             this.rdbRowSel.Size = new System.Drawing.Size(92, 17);
             this.rdbRowSel.TabIndex = 1;
-            this.rdbRowSel.TabStop = true;
             this.rdbRowSel.Text = "Row selection";
             this.rdbRowSel.UseVisualStyleBackColor = true;
             this.rdbRowSel.CheckedChanged += new System.EventHandler(this.rdbRowSel_CheckedChanged);
@@ -154,6 +153,7 @@
             // rdbCellSel
             // 
             this.rdbCellSel.AutoSize = true;
+            this.rdbCellSel.Checked = true;
             this.rdbCellSel.Location = new System.Drawing.Point(7, 20);
             this.rdbCellSel.Name = "rdbCellSel";
             this.rdbCellSel.Size = new System.Drawing.Size(87, 17);
@@ -224,8 +224,10 @@
             this.dataGridView1.Location = new System.Drawing.Point(12, 92);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
             this.dataGridView1.Size = new System.Drawing.Size(400, 308);
             this.dataGridView1.TabIndex = 7;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             this.dataGridView1.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dataGridView1_UserAddedRow);

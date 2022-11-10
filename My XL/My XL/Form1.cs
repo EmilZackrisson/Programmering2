@@ -19,6 +19,8 @@ namespace My_XL
     {
         List<Person> persons = new List<Person>();
         bool saved = true;
+        int rowIndex = -1;
+        int colIndex = -1;
         public Form1()
         {
             InitializeComponent();
@@ -40,12 +42,20 @@ namespace My_XL
 
         private void btnUpdateCell_Click(object sender, EventArgs e)
         {
-
+            if (rowIndex != -1 && colIndex != -1)
+            {
+                dataGridView1.Rows[rowIndex].Cells[colIndex].Value = tbxUpdateCell.Text;
+                tbxUpdateCell.Text = "";
+            }
         }
 
         private void btnUpdateHeader_Click(object sender, EventArgs e)
         {
-
+            if (rowIndex != -1 && colIndex != -1)
+            {
+                dataGridView1.Rows[rowIndex].HeaderCell.Value = tbxUpdateHeader.Text;
+                tbxUpdateHeader.Text = "";
+            }
         }
 
         private void rdbRowSel_CheckedChanged(object sender, EventArgs e)
@@ -63,20 +73,12 @@ namespace My_XL
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
-       
 
-            rdbRowSel.Checked = true;
-
-           
         }
 
         
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            
-        }
+
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -167,14 +169,33 @@ namespace My_XL
             saved = false;
         }
 
-        private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
             
         }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            rowIndex = e.RowIndex;
+            colIndex = e.ColumnIndex;
+
+            if (rdbRowSel.Checked)
+            {
+                dataGridView1.Rows[rowIndex].Selected = true;
+            }
+            
+            if (dataGridView1.Rows[rowIndex].Cells[colIndex].Value != null)
+            {
+                string cellValue = dataGridView1.Rows[rowIndex].Cells[colIndex].Value.ToString();
+                tbxUpdateCell.Text = cellValue;
+
+                
+            }
+                
+            
+            
+        }
+
+
     }
 }
