@@ -39,7 +39,8 @@ namespace Sparbanken_Banken
             }
             else
             {
-               // LåneKonto låneKonto = new LåneKonto();
+                // LåneKonto låneKonto = new LåneKonto();
+                LåneKonto låneKonto = new LåneKonto(tbxPersonNr.Text,);
             }
         }
 
