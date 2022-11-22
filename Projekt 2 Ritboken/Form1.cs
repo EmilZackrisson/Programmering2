@@ -46,12 +46,54 @@ namespace Projekt_2_Ritboken
                     int sista = antalPunkter - 1;
                     Point from = points[sista - 1];
                     Point to = points[sista];
-                    int width = from.X - to.X;
-                    int height = from.Y - to.Y;
-                    Rectangle rect = new Rectangle(from.X, from.Y, width, height);
-                    Pen pen = new Pen(currentColor, tbrPenThickness.Value);
-                    g.DrawRectangle(pen, rect);
-                    points.Clear();
+                    //int width = from.X - to.X;
+                    int width = to.X - from.X;
+                    //int height = from.Y - to.Y;
+                    int height = to.Y - from.Y;
+
+                    int w = Math.Abs(from.X- to.X);
+                    int h = Math.Abs(from.Y - to.Y);
+
+                    if (to.X >= from.X)
+                    {
+                        if (to.Y >= from.Y)
+                        {
+                            Rectangle rect = new Rectangle(from.X, from.Y, w, h);
+
+                            Pen pen = new Pen(currentColor, tbrPenThickness.Value);
+                            g.DrawRectangle(pen, rect);
+                            points.Clear();
+                        }
+                        else
+                        {
+                            Rectangle rect = new Rectangle(from.X, to.Y, w, h);
+
+                            Pen pen = new Pen(currentColor, tbrPenThickness.Value);
+                            g.DrawRectangle(pen, rect);
+                            points.Clear();
+                        }
+                    }
+                    else
+                    {
+                        if (to.Y >= from.Y)
+                        {
+                            Rectangle rect = new Rectangle(to.X, from.Y, w, h);
+
+                            Pen pen = new Pen(currentColor, tbrPenThickness.Value);
+                            g.DrawRectangle(pen, rect);
+                            points.Clear();
+                        }
+                        else
+                        {
+                            Rectangle rect = new Rectangle(to.X, to.Y, w, h);
+
+                            Pen pen = new Pen(currentColor, tbrPenThickness.Value);
+                            g.DrawRectangle(pen, rect);
+                            points.Clear();
+                        }
+                    }
+
+                    
                 }
             }
             if (rdbCirkel.Checked)
@@ -61,9 +103,13 @@ namespace Projekt_2_Ritboken
                     int sista = antalPunkter - 1;
                     Point from = points[sista - 1];
                     Point to = points[sista];
-                    int width = from.X - to.X;
-                    int height = from.Y - to.Y;
+                    //int width = from.X - to.X;
+                    int width = to.X - from.X;
+                    //int height = from.Y - to.Y;
+                    int height = to.Y - from.Y;
+
                     Rectangle rect = new Rectangle(from.X, from.Y, width, height);
+
                     Pen pen = new Pen(currentColor, tbrPenThickness.Value);
                     g.DrawEllipse(pen, rect);
                     points.Clear();
