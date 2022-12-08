@@ -91,7 +91,13 @@ namespace Fotbollsligan_DataGridView
 
         private void btnUpp_Click(object sender, EventArgs e)
         {
+            int index = dgvMatcher.SelectedRows[0].Index;
+            var ValdMatch = matcher[index];
+            var NerMatch = matcher[index - 1];
+            matcher[index] = NerMatch;
+            matcher[index - 1] = ValdMatch;
 
+            dgvMatcher.DataSource = matcher;
         }
 
         private void btnNer_Click(object sender, EventArgs e)
