@@ -31,7 +31,8 @@ namespace Skrivprogram___RichTextBox
             {
                 richTextBox1.SelectionFont = fontDialog1.Font;
                 btnFont.Text = "Teckensnitt: " + fontDialog1.Font.Name;
-                btnFont.Font = fontDialog1.Font;
+                Font font = new Font(fontDialog1.Font.Name, 8, fontDialog1.Font.Style);
+                btnFont.Font = font;
             }
         }
 

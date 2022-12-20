@@ -38,7 +38,9 @@
             this.rdbVänster = new System.Windows.Forms.RadioButton();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.arkivToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nyttToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.öppnaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sparaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.sparaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.inställningarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ändraIkonerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,8 +53,6 @@
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.cbxBold = new System.Windows.Forms.CheckBox();
             this.cbxItalic = new System.Windows.Forms.CheckBox();
-            this.nyttToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sparaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
@@ -148,6 +148,14 @@
             this.arkivToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.arkivToolStripMenuItem.Text = "Arkiv";
             // 
+            // nyttToolStripMenuItem
+            // 
+            this.nyttToolStripMenuItem.Name = "nyttToolStripMenuItem";
+            this.nyttToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.nyttToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.nyttToolStripMenuItem.Text = "Nytt";
+            this.nyttToolStripMenuItem.Click += new System.EventHandler(this.nyttToolStripMenuItem_Click);
+            // 
             // öppnaToolStripMenuItem
             // 
             this.öppnaToolStripMenuItem.Name = "öppnaToolStripMenuItem";
@@ -155,6 +163,14 @@
             this.öppnaToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.öppnaToolStripMenuItem.Text = "Öppna";
             this.öppnaToolStripMenuItem.Click += new System.EventHandler(this.öppnaToolStripMenuItem_Click);
+            // 
+            // sparaToolStripMenuItem1
+            // 
+            this.sparaToolStripMenuItem1.Name = "sparaToolStripMenuItem1";
+            this.sparaToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.sparaToolStripMenuItem1.Size = new System.Drawing.Size(201, 22);
+            this.sparaToolStripMenuItem1.Text = "Spara";
+            this.sparaToolStripMenuItem1.Click += new System.EventHandler(this.sparaToolStripMenuItem1_Click);
             // 
             // sparaToolStripMenuItem
             // 
@@ -225,9 +241,20 @@
             // numericUpDown1
             // 
             this.numericUpDown1.Location = new System.Drawing.Point(139, 33);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            72,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(32, 20);
             this.numericUpDown1.TabIndex = 8;
+            this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numericUpDown1.Value = new decimal(new int[] {
             9,
             0,
@@ -260,22 +287,6 @@
             this.cbxItalic.Text = "I";
             this.cbxItalic.UseVisualStyleBackColor = true;
             this.cbxItalic.CheckedChanged += new System.EventHandler(this.cbxItalic_CheckedChanged);
-            // 
-            // nyttToolStripMenuItem
-            // 
-            this.nyttToolStripMenuItem.Name = "nyttToolStripMenuItem";
-            this.nyttToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.nyttToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
-            this.nyttToolStripMenuItem.Text = "Nytt";
-            this.nyttToolStripMenuItem.Click += new System.EventHandler(this.nyttToolStripMenuItem_Click);
-            // 
-            // sparaToolStripMenuItem1
-            // 
-            this.sparaToolStripMenuItem1.Name = "sparaToolStripMenuItem1";
-            this.sparaToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.sparaToolStripMenuItem1.Size = new System.Drawing.Size(201, 22);
-            this.sparaToolStripMenuItem1.Text = "Spara";
-            this.sparaToolStripMenuItem1.Click += new System.EventHandler(this.sparaToolStripMenuItem1_Click);
             // 
             // Form1
             // 
