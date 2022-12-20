@@ -54,6 +54,10 @@ namespace Bataljonen
             }
             else tbxNyAntal.Enabled = false;
 
+            if (valdNod.Level == GRUPP)
+            {
+                rtbInfo.AppendText("\r\nAntal soldater: " + valdNod.Tag.ToString());
+            }
 
 
         }
