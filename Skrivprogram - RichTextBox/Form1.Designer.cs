@@ -47,11 +47,12 @@
             this.högerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             this.cbxFonts = new System.Windows.Forms.ComboBox();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.cbxBold = new System.Windows.Forms.CheckBox();
             this.cbxItalic = new System.Windows.Forms.CheckBox();
+            this.nyttToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sparaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
@@ -75,6 +76,7 @@
             this.richTextBox1.Size = new System.Drawing.Size(781, 425);
             this.richTextBox1.TabIndex = 4;
             this.richTextBox1.Text = "";
+            this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             // 
             // panelColor
             // 
@@ -138,7 +140,9 @@
             // arkivToolStripMenuItem
             // 
             this.arkivToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.nyttToolStripMenuItem,
             this.öppnaToolStripMenuItem,
+            this.sparaToolStripMenuItem1,
             this.sparaToolStripMenuItem});
             this.arkivToolStripMenuItem.Name = "arkivToolStripMenuItem";
             this.arkivToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
@@ -147,15 +151,18 @@
             // öppnaToolStripMenuItem
             // 
             this.öppnaToolStripMenuItem.Name = "öppnaToolStripMenuItem";
-            this.öppnaToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.öppnaToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.öppnaToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.öppnaToolStripMenuItem.Text = "Öppna";
             this.öppnaToolStripMenuItem.Click += new System.EventHandler(this.öppnaToolStripMenuItem_Click);
             // 
             // sparaToolStripMenuItem
             // 
             this.sparaToolStripMenuItem.Name = "sparaToolStripMenuItem";
-            this.sparaToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
-            this.sparaToolStripMenuItem.Text = "Spara";
+            this.sparaToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+            | System.Windows.Forms.Keys.S)));
+            this.sparaToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.sparaToolStripMenuItem.Text = "Spara som";
             this.sparaToolStripMenuItem.Click += new System.EventHandler(this.sparaToolStripMenuItem_Click);
             // 
             // inställningarToolStripMenuItem
@@ -201,9 +208,10 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // openFileDialog2
+            // saveFileDialog1
             // 
-            this.openFileDialog2.FileName = "openFileDialog2";
+            this.saveFileDialog1.DefaultExt = "*.rtf";
+            this.saveFileDialog1.Filter = "RTF Files|*.rtf";
             // 
             // cbxFonts
             // 
@@ -252,6 +260,22 @@
             this.cbxItalic.Text = "I";
             this.cbxItalic.UseVisualStyleBackColor = true;
             this.cbxItalic.CheckedChanged += new System.EventHandler(this.cbxItalic_CheckedChanged);
+            // 
+            // nyttToolStripMenuItem
+            // 
+            this.nyttToolStripMenuItem.Name = "nyttToolStripMenuItem";
+            this.nyttToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.nyttToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.nyttToolStripMenuItem.Text = "Nytt";
+            this.nyttToolStripMenuItem.Click += new System.EventHandler(this.nyttToolStripMenuItem_Click);
+            // 
+            // sparaToolStripMenuItem1
+            // 
+            this.sparaToolStripMenuItem1.Name = "sparaToolStripMenuItem1";
+            this.sparaToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.sparaToolStripMenuItem1.Size = new System.Drawing.Size(201, 22);
+            this.sparaToolStripMenuItem1.Text = "Spara";
+            this.sparaToolStripMenuItem1.Click += new System.EventHandler(this.sparaToolStripMenuItem1_Click);
             // 
             // Form1
             // 
@@ -302,11 +326,12 @@
         private System.Windows.Forms.ToolStripMenuItem öppnaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sparaToolStripMenuItem;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
-        private System.Windows.Forms.OpenFileDialog openFileDialog2;
         private System.Windows.Forms.ComboBox cbxFonts;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.CheckBox cbxBold;
         private System.Windows.Forms.CheckBox cbxItalic;
+        private System.Windows.Forms.ToolStripMenuItem nyttToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sparaToolStripMenuItem1;
     }
 }
 

@@ -14,9 +14,11 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Skrivprogram___RichTextBox
 {
+
     public partial class Form1 : Form
     {
-
+        bool sparat = false;
+        string savePath = "";
 
         public Form1()
         {
@@ -118,29 +120,12 @@ namespace Skrivprogram___RichTextBox
 
         private void öppnaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (openFileDialog2.ShowDialog() == DialogResult.OK)
-            {
-                FileStream inStröm = new FileStream(openFileDialog2.FileName, FileMode.Open, FileAccess.Read);
-                StreamReader läsare = new StreamReader(inStröm);
-
-                string filText = läsare.ReadToEnd();
-                richTextBox1.Text = filText;
-                läsare.Dispose();
-            }
+            open();
         }
 
         private void sparaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                FileStream utStröm = new FileStream(saveFileDialog1.FileName, FileMode.OpenOrCreate, FileAccess.Write);
-                StreamWriter writer = new StreamWriter(utStröm);
-
-                writer.Write(richTextBox1.Text);
-                writer.Dispose();
-            }
-
-
+            saveAs();
         }
 
         private void cbxFonts_SelectedValueChanged(object sender, EventArgs e)
@@ -167,6 +152,54 @@ namespace Skrivprogram___RichTextBox
 
         }
 
+        private void saveAs()
+        {
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                savePath = saveFileDialog1.FileName;
+                richTextBox1.SaveFile(saveFileDialog1.FileName, RichTextBoxStreamType.RichText);
+                sparat = true;
+            }
+        }
+
+        private void save()
+        {
+            if (savePath != "")
+            {
+                richTextBox1.SaveFile(savePath, RichTextBoxStreamType.RichText);
+                sparat = true;
+            }
+            else
+            {
+                saveAs();
+            }
+        }
+
+        private void open()
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                richTextBox1.LoadFile(openFileDialog1.FileName, RichTextBoxStreamType.RichText);
+            }
+        }
+
+        private void newFile()
+        {
+            DialogResult dialogResult = MessageBox.Show("Vill du spara?", "Spara?", MessageBoxButtons.YesNoCancel);
+            if (dialogResult == DialogResult.Yes)
+            {
+                save();
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                richTextBox1.Clear();
+            }
+            else if (dialogResult == DialogResult.Cancel)
+            {
+                return;
+            }
+        }
+
         private void updateFont(string font, int fontSize, bool bold, bool italic)
         {
             Font font1 = new Font(font, fontSize);
@@ -186,6 +219,22 @@ namespace Skrivprogram___RichTextBox
             {
                 richTextBox1.SelectionFont = new Font(font1, FontStyle.Regular);
             }
+        }
+
+        private void sparaToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            save();
+        }
+
+
+        private void nyttToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            newFile();
+        }
+
+        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        {
+            sparat = false;
         }
     }
 }
