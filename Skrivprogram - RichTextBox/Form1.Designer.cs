@@ -71,6 +71,7 @@
             // richTextBox1
             // 
             this.richTextBox1.AcceptsTab = true;
+            this.richTextBox1.BackColor = System.Drawing.Color.Gray;
             this.richTextBox1.Location = new System.Drawing.Point(7, 64);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.Size = new System.Drawing.Size(781, 425);
@@ -294,6 +295,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(800, 531);
             this.Controls.Add(this.cbxItalic);
             this.Controls.Add(this.cbxBold);
