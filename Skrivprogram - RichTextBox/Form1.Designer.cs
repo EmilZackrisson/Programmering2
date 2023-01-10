@@ -175,7 +175,7 @@
             // sparaToolStripMenuItem
             // 
             this.sparaToolStripMenuItem.Name = "sparaToolStripMenuItem";
-            this.sparaToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+            this.sparaToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.S)));
             this.sparaToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.sparaToolStripMenuItem.Text = "Spara som";
@@ -222,7 +222,9 @@
             // 
             // openFileDialog1
             // 
+            this.openFileDialog1.DefaultExt = "*.rtf";
             this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.Filter = "RTF Files | *.rtf";
             // 
             // saveFileDialog1
             // 
@@ -306,7 +308,7 @@
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Skrivprogram";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

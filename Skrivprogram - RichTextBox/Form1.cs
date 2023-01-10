@@ -33,6 +33,8 @@ namespace Skrivprogram___RichTextBox
                 btnFont.Text = "Teckensnitt: " + fontDialog1.Font.Name;
                 Font font = new Font(fontDialog1.Font.Name, 8, fontDialog1.Font.Style);
                 btnFont.Font = font;
+                cbxFonts.SelectedText = font.Name;
+                cbxFonts.Font = font;
             }
         }
 
@@ -160,6 +162,9 @@ namespace Skrivprogram___RichTextBox
                 savePath = saveFileDialog1.FileName;
                 richTextBox1.SaveFile(saveFileDialog1.FileName, RichTextBoxStreamType.RichText);
                 sparat = true;
+                string filenameWithExtention = Path.GetFileName(saveFileDialog1.FileName);
+                Form1.ActiveForm.Text = filenameWithExtention;
+
             }
         }
 
@@ -169,6 +174,9 @@ namespace Skrivprogram___RichTextBox
             {
                 richTextBox1.SaveFile(savePath, RichTextBoxStreamType.RichText);
                 sparat = true;
+
+                string filenameWithExtention = Path.GetFileName(savePath);
+                Form1.ActiveForm.Text = filenameWithExtention;
             }
             else
             {
@@ -181,19 +189,27 @@ namespace Skrivprogram___RichTextBox
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 richTextBox1.LoadFile(openFileDialog1.FileName, RichTextBoxStreamType.RichText);
+                sparat = true;
+                Form1.ActiveForm.Text = openFileDialog1.SafeFileName;
+                savePath = openFileDialog1.FileName;
             }
         }
 
         private void newFile()
         {
-            DialogResult dialogResult = MessageBox.Show("Vill du spara?", "Spara?", MessageBoxButtons.YesNoCancel);
+            DialogResult dialogResult = MessageBox.Show("Vill du spara?", "Spara?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
             if (dialogResult == DialogResult.Yes)
             {
                 save();
+                richTextBox1.Clear();
+                sparat = false;
+                savePath = "";
             }
             else if (dialogResult == DialogResult.No)
             {
                 richTextBox1.Clear();
+                sparat = false;
+                savePath = "";
             }
             else if (dialogResult == DialogResult.Cancel)
             {
@@ -236,6 +252,12 @@ namespace Skrivprogram___RichTextBox
         private void richTextBox1_TextChanged(object sender, EventArgs e)
         {
             sparat = false;
+            if (!Form1.ActiveForm.Text.Contains("(unsaved)"))
+            {
+                string title = Form1.ActiveForm.Text + " (unsaved)";
+                Form1.ActiveForm.Text = title;
+            }
+
         }
     }
 }
