@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Text;
+using System.IO;
+using System.Linq;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 
 namespace Skrivprogram___RichTextBox
 {
-
     public partial class Form1 : Form
     {
         bool sparat = false;
@@ -62,7 +66,7 @@ namespace Skrivprogram___RichTextBox
             {
                 if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 {
-                    rdbVänster.Image = Image.FromFile(openFileDialog1.FileName);
+                    //rdbVänster.Image = Image.FromFile(openFileDialog1.FileName);
                 }
             }
         }
@@ -76,7 +80,7 @@ namespace Skrivprogram___RichTextBox
             {
                 if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 {
-                    rdbCenter.Image = Image.FromFile(openFileDialog1.FileName);
+                    //rdbCenter.Image = Image.FromFile(openFileDialog1.FileName);
                 }
             }
         }
@@ -90,7 +94,7 @@ namespace Skrivprogram___RichTextBox
             {
                 if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 {
-                    rdbHöger.Image = Image.FromFile(openFileDialog1.FileName);
+                    //rdbHöger.Image = Image.FromFile(openFileDialog1.FileName);
                 }
             }
         }
@@ -100,13 +104,11 @@ namespace Skrivprogram___RichTextBox
             btnFont.Text = "Teckensnitt: " + richTextBox1.Font.Name;
             btnFont.Font = richTextBox1.Font;
 
-
             using (InstalledFontCollection col = new InstalledFontCollection())
             {
                 foreach (FontFamily fa in col.Families)
                 {
                     cbxFonts.Items.Add(fa.Name);
-
                 }
             }
             cbxFonts.SelectedItem = richTextBox1.Font.Name;
@@ -132,7 +134,6 @@ namespace Skrivprogram___RichTextBox
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
             updateFont(cbxFonts.SelectedItem.ToString(), (int)numericUpDown1.Value, cbxBold.Checked, cbxItalic.Checked);
-
         }
 
         private void cbxItalic_CheckedChanged(object sender, EventArgs e)
@@ -143,40 +144,49 @@ namespace Skrivprogram___RichTextBox
         private void cbxBold_CheckedChanged(object sender, EventArgs e)
         {
             updateFont(cbxFonts.SelectedItem.ToString(), (int)numericUpDown1.Value, cbxBold.Checked, cbxItalic.Checked);
-
         }
 
         private void saveAs()
         {
+            // Sparar en fil med ett nytt fränt filformat (.skitformat)
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 savePath = saveFileDialog1.FileName;
                 richTextBox1.SaveFile(saveFileDialog1.FileName, RichTextBoxStreamType.RichText);
+
                 sparat = true;
                 string filenameWithExtention = Path.GetFileName(saveFileDialog1.FileName);
                 Form1.ActiveForm.Text = filenameWithExtention;
-
             }
         }
 
         private void save()
         {
-            if (savePath != "")
+            // Sparar en fil med ett nytt fränt filformat (.skitformat)
+            try
             {
-                richTextBox1.SaveFile(savePath, RichTextBoxStreamType.RichText);
-                sparat = true;
+                if (savePath != "")
+                {
+                    richTextBox1.SaveFile(savePath, RichTextBoxStreamType.RichText);
+                    sparat = true;
 
-                string filenameWithExtention = Path.GetFileName(savePath);
-                Form1.ActiveForm.Text = filenameWithExtention;
+                    string filenameWithExtention = Path.GetFileName(savePath);
+                    Form1.ActiveForm.Text = filenameWithExtention;
+                }
+                else
+                {
+                    saveAs();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                saveAs();
+                MessageBox.Show(ex.Message, "Error while saving", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void open()
         {
+            // Öppnar en fil med ett nytt fränt filformat (.skitformat)
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 richTextBox1.LoadFile(openFileDialog1.FileName, RichTextBoxStreamType.RichText);
@@ -248,9 +258,65 @@ namespace Skrivprogram___RichTextBox
                 string title = Form1.ActiveForm.Text + " (unsaved)";
                 Form1.ActiveForm.Text = title;
             }
+            //läsFormattering();
+
+            lblAntalOrd.Text = "Antal ord: " + ordräknare();
+            lblAntalTecken.Text = "Antal tecken: " + teckenräknare().ToString();
+
 
         }
 
-        
+        private void läsFormattering()
+        {
+            int lineCounter = 0;
+            foreach (var line in richTextBox1.Lines)
+            {
+
+                richTextBox1.Select(richTextBox1.GetFirstCharIndexFromLine(lineCounter), line.Length);
+                label1.Text = label1.Text + richTextBox1.SelectionFont;
+                richTextBox1.Select();
+                lineCounter++;
+            }
+        }
+
+        private int ordräknare()
+        {
+            int count = 0;
+            bool inWord = false;
+
+            string text = richTextBox1.Text;
+            foreach (char t in text)
+            {
+                if (char.IsWhiteSpace(t))
+                {
+                    inWord = false;
+                }
+                else
+                {
+                    if (!inWord) count++;
+                    inWord = true;
+                }
+            }
+            return count;
+        }
+
+        private int teckenräknare()
+        {
+            int antal = 0;
+            foreach (char tecken in richTextBox1.Text)
+            {
+                antal++;
+            }
+            return antal;
+        }
+
+        private void richTextBox1_SelectionChanged(object sender, EventArgs e)
+        {
+            int nuvarandeRad = richTextBox1.GetLineFromCharIndex(richTextBox1.GetFirstCharIndexOfCurrentLine()) + 1;
+            lblRad.Text = "Rad: " + nuvarandeRad.ToString();
+
+            int plats = richTextBox1.SelectionStart - richTextBox1.GetFirstCharIndexOfCurrentLine();
+            lblPlats.Text = plats.ToString();
+        }
     }
 }

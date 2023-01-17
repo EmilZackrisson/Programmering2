@@ -53,6 +53,12 @@
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.cbxBold = new System.Windows.Forms.CheckBox();
             this.cbxItalic = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lblAntalOrd = new System.Windows.Forms.Label();
+            this.rtbDebug = new System.Windows.Forms.RichTextBox();
+            this.lblAntalTecken = new System.Windows.Forms.Label();
+            this.lblRad = new System.Windows.Forms.Label();
+            this.lblPlats = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
@@ -60,7 +66,7 @@
             // btnFont
             // 
             this.btnFont.AutoSize = true;
-            this.btnFont.Location = new System.Drawing.Point(7, 495);
+            this.btnFont.Location = new System.Drawing.Point(12, 494);
             this.btnFont.Name = "btnFont";
             this.btnFont.Size = new System.Drawing.Size(88, 23);
             this.btnFont.TabIndex = 0;
@@ -71,18 +77,18 @@
             // richTextBox1
             // 
             this.richTextBox1.AcceptsTab = true;
-            this.richTextBox1.BackColor = System.Drawing.Color.Gray;
-            this.richTextBox1.Location = new System.Drawing.Point(7, 64);
+            this.richTextBox1.Location = new System.Drawing.Point(12, 59);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(781, 425);
+            this.richTextBox1.Size = new System.Drawing.Size(810, 429);
             this.richTextBox1.TabIndex = 4;
             this.richTextBox1.Text = "";
+            this.richTextBox1.SelectionChanged += new System.EventHandler(this.richTextBox1_SelectionChanged);
             this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             // 
             // panelColor
             // 
             this.panelColor.BackColor = System.Drawing.Color.Black;
-            this.panelColor.Location = new System.Drawing.Point(618, 31);
+            this.panelColor.Location = new System.Drawing.Point(500, 31);
             this.panelColor.Name = "panelColor";
             this.panelColor.Size = new System.Drawing.Size(25, 24);
             this.panelColor.TabIndex = 5;
@@ -134,7 +140,7 @@
             this.inställningarToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1123, 24);
             this.menuStrip1.TabIndex = 6;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -197,7 +203,7 @@
             this.mittenToolStripMenuItem,
             this.högerToolStripMenuItem});
             this.ändraIkonerToolStripMenuItem.Name = "ändraIkonerToolStripMenuItem";
-            this.ändraIkonerToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.ändraIkonerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.ändraIkonerToolStripMenuItem.Text = "Ändra ikoner";
             // 
             // vänsterToolStripMenuItem
@@ -223,14 +229,14 @@
             // 
             // openFileDialog1
             // 
-            this.openFileDialog1.DefaultExt = "*.rtf";
+            this.openFileDialog1.DefaultExt = "*.skitformat";
             this.openFileDialog1.FileName = "openFileDialog1";
-            this.openFileDialog1.Filter = "RTF Files | *.rtf";
+            this.openFileDialog1.Filter = "Skitformatfiler | *.skitformat";
             // 
             // saveFileDialog1
             // 
-            this.saveFileDialog1.DefaultExt = "*.rtf";
-            this.saveFileDialog1.Filter = "RTF Files|*.rtf";
+            this.saveFileDialog1.DefaultExt = "*.skitformat";
+            this.saveFileDialog1.Filter = "Skitformat Filer|*.skitformat";
             // 
             // cbxFonts
             // 
@@ -291,18 +297,76 @@
             this.cbxItalic.UseVisualStyleBackColor = true;
             this.cbxItalic.CheckedChanged += new System.EventHandler(this.cbxItalic_CheckedChanged);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(840, 84);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 11;
+            this.label1.Text = "label1";
+            // 
+            // lblAntalOrd
+            // 
+            this.lblAntalOrd.AutoSize = true;
+            this.lblAntalOrd.Location = new System.Drawing.Point(568, 27);
+            this.lblAntalOrd.Name = "lblAntalOrd";
+            this.lblAntalOrd.Size = new System.Drawing.Size(53, 13);
+            this.lblAntalOrd.TabIndex = 12;
+            this.lblAntalOrd.Text = "Ordantal: ";
+            // 
+            // rtbDebug
+            // 
+            this.rtbDebug.Location = new System.Drawing.Point(843, 220);
+            this.rtbDebug.Name = "rtbDebug";
+            this.rtbDebug.Size = new System.Drawing.Size(247, 245);
+            this.rtbDebug.TabIndex = 13;
+            this.rtbDebug.Text = "";
+            // 
+            // lblAntalTecken
+            // 
+            this.lblAntalTecken.AutoSize = true;
+            this.lblAntalTecken.Location = new System.Drawing.Point(544, 42);
+            this.lblAntalTecken.Name = "lblAntalTecken";
+            this.lblAntalTecken.Size = new System.Drawing.Size(74, 13);
+            this.lblAntalTecken.TabIndex = 14;
+            this.lblAntalTecken.Text = "Antal Tecken:";
+            // 
+            // lblRad
+            // 
+            this.lblRad.AutoSize = true;
+            this.lblRad.Location = new System.Drawing.Point(696, 27);
+            this.lblRad.Name = "lblRad";
+            this.lblRad.Size = new System.Drawing.Size(33, 13);
+            this.lblRad.TabIndex = 15;
+            this.lblRad.Text = "Rad: ";
+            // 
+            // lblPlats
+            // 
+            this.lblPlats.AutoSize = true;
+            this.lblPlats.Location = new System.Drawing.Point(696, 43);
+            this.lblPlats.Name = "lblPlats";
+            this.lblPlats.Size = new System.Drawing.Size(33, 13);
+            this.lblPlats.TabIndex = 16;
+            this.lblPlats.Text = "Plats:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(800, 531);
+            this.ClientSize = new System.Drawing.Size(1123, 528);
+            this.Controls.Add(this.lblPlats);
+            this.Controls.Add(this.lblRad);
+            this.Controls.Add(this.lblAntalTecken);
+            this.Controls.Add(this.rtbDebug);
+            this.Controls.Add(this.lblAntalOrd);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.richTextBox1);
+            this.Controls.Add(this.panelColor);
             this.Controls.Add(this.cbxItalic);
             this.Controls.Add(this.cbxBold);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.cbxFonts);
-            this.Controls.Add(this.panelColor);
-            this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.rdbHöger);
             this.Controls.Add(this.rdbCenter);
             this.Controls.Add(this.rdbVänster);
@@ -347,6 +411,12 @@
         private System.Windows.Forms.CheckBox cbxItalic;
         private System.Windows.Forms.ToolStripMenuItem nyttToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sparaToolStripMenuItem1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblAntalOrd;
+        private System.Windows.Forms.RichTextBox rtbDebug;
+        private System.Windows.Forms.Label lblAntalTecken;
+        private System.Windows.Forms.Label lblRad;
+        private System.Windows.Forms.Label lblPlats;
     }
 }
 
