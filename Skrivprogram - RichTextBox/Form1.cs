@@ -148,19 +148,6 @@ namespace Skrivprogram___RichTextBox
 
         private void saveAs()
         {
-            /*
-            // Sparar en fil med ett nytt fränt filformat (.skitformat)
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                savePath = saveFileDialog1.FileName;
-                richTextBox1.SaveFile(saveFileDialog1.FileName, RichTextBoxStreamType.RichText);
-
-                sparat = true;
-                string filenameWithExtention = Path.GetFileName(saveFileDialog1.FileName);
-                Form1.ActiveForm.Text = filenameWithExtention;
-            }
-            */
-
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 savePath = saveFileDialog1.FileName;
@@ -174,15 +161,15 @@ namespace Skrivprogram___RichTextBox
             }
         }
 
-        private void save(string text)
+        private void save()
         {
-            /*
+            
             // Sparar en fil med ett nytt fränt filformat (.skitformat)
             try
             {
                 if (savePath != "")
                 {
-                    richTextBox1.SaveFile(savePath, RichTextBoxStreamType.RichText);
+                    File.WriteAllText(savePath, läsFormattering());
                     sparat = true;
 
                     string filenameWithExtention = Path.GetFileName(savePath);
@@ -193,30 +180,23 @@ namespace Skrivprogram___RichTextBox
                     saveAs();
                 }
             }
-            catch (Exception ex)
+            catch (Exception error)
             {
-                MessageBox.Show(ex.Message, "Error while saving", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            } */
+                showErrorMessage(error);
+            } 
 
 
         }
 
         private void open()
         {
-            /*
-            // Öppnar en fil med ett nytt fränt filformat (.skitformat)
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                richTextBox1.LoadFile(openFileDialog1.FileName, RichTextBoxStreamType.RichText);
-                sparat = true;
-                Form1.ActiveForm.Text = openFileDialog1.SafeFileName;
-                savePath = openFileDialog1.FileName;
-            }*/
-
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 string text = File.ReadAllText(openFileDialog1.FileName);
                 decodeFormatting(text);
+                sparat = true;
+                Form1.ActiveForm.Text = openFileDialog1.SafeFileName;
+                savePath = openFileDialog1.FileName;
             }
         }
 
@@ -265,7 +245,7 @@ namespace Skrivprogram___RichTextBox
 
         private void sparaToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            //save();
+            save();
         }
 
 
@@ -362,57 +342,75 @@ namespace Skrivprogram___RichTextBox
 
         private void decodeFormatting(string formattedText)
         {
-            List<string> tecken = formattedText.Split('}').ToList();
-            tecken.RemoveAt(tecken.Count - 1);
-            int index = 0;
-            foreach(string teckenItem in tecken)
+            try
             {
-                //rtbDebug.AppendText(teckenItem + "\n");
-                string text = teckenItem.Remove(0, 1);
-                List<string> format = text.Split('Î').ToList();
-                richTextBox1.AppendText(format[0]);
-                richTextBox1.Select(index, 1);
-                richTextBox1.SelectionFont = decodeFont(format[1], format[2]);
-                
-                // Extract and set color from file
-                string colorName = format[2].Substring(7);
-                colorName = colorName.Remove(colorName.Length - 1, 1);
-                richTextBox1.SelectionColor = Color.FromName(colorName);
+                List<string> tecken = formattedText.Split('}').ToList();
+                tecken.RemoveAt(tecken.Count - 1);
+                int index = 0;
+                foreach (string teckenItem in tecken)
+                {
+                    //rtbDebug.AppendText(teckenItem + "\n");
+                    string text = teckenItem.Remove(0, 1);
+                    List<string> format = text.Split('Î').ToList();
+                    richTextBox1.AppendText(format[0]);
+                    richTextBox1.Select(index, 1);
+                    richTextBox1.SelectionFont = decodeFont(format[1], format[2]);
+
+                    // Extract and set color from file
+                    string colorName = format[2].Substring(7);
+                    colorName = colorName.Remove(colorName.Length - 1, 1);
+                    richTextBox1.SelectionColor = Color.FromName(colorName);
 
 
-                index++;
+                    index++;
+                }
             }
+            catch (Exception error)
+            {
+                showErrorMessage(error);
+                throw;
+            }
+            
         }
 
         private Font decodeFont(string fontString, string fontStyle)
         {
-            // Remove ] from the end of the string
-            fontString = fontString.Remove(fontString.Length - 1);
-
-            string[] properties = fontString.Split(',');
-            Font font = new Font(properties[0].Split('=')[1], 9);
-            for (int i = 1; i < properties.Length; i++)
+            try
             {
-                string[] property = properties[i].Split('=');
-                string propertyName = property[0].Trim();
-                string propertyValue = property[1].Trim();
+                // Remove ] from the end of the string
+                fontString = fontString.Remove(fontString.Length - 1);
 
-                if (propertyName.Contains("Size"))
+                string[] properties = fontString.Split(',');
+                Font font = new Font(properties[0].Split('=')[1], 9);
+                for (int i = 1; i < properties.Length; i++)
                 {
-                    float size = float.Parse(propertyValue);
-                    font = new Font(font.Name, size);
+                    string[] property = properties[i].Split('=');
+                    string propertyName = property[0].Trim();
+                    string propertyValue = property[1].Trim();
+
+                    if (propertyName.Contains("Size"))
+                    {
+                        float size = float.Parse(propertyValue);
+                        font = new Font(font.Name, size);
+                    }
+
+                    if (fontStyle != "")
+                    {
+                        var fontSyle = (FontStyle)Enum.Parse((typeof(FontStyle)), fontStyle);
+                        font = new Font(font.Name, font.Size, fontSyle);
+                    }
+
+
+                    //rtbDebug.AppendText(properties[i].ToString() + "\n");
                 }
-
-                if (fontStyle != "")
-                {
-                    var fontSyle = (FontStyle)Enum.Parse((typeof(FontStyle)), fontStyle);
-                    font = new Font(font.Name, font.Size, fontSyle);
-                }
-
-
-                //rtbDebug.AppendText(properties[i].ToString() + "\n");
+                return font;
             }
-            return font;
+            catch (Exception error)
+            {
+                showErrorMessage(error);
+                throw;
+            }
+            
 
         }
 
@@ -422,6 +420,11 @@ namespace Skrivprogram___RichTextBox
 
             Font font = new Font(richTextBox1.SelectionFont, FontStyle.Bold | FontStyle.Italic);
             MessageBox.Show(font.ToString());
+        }
+
+        private void showErrorMessage(Exception error)
+        {
+            MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         
