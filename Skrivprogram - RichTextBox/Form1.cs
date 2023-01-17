@@ -344,6 +344,7 @@ namespace Skrivprogram___RichTextBox
         {
             try
             {
+                richTextBox1.Clear();
                 List<string> tecken = formattedText.Split('}').ToList();
                 tecken.RemoveAt(tecken.Count - 1);
                 int index = 0;
