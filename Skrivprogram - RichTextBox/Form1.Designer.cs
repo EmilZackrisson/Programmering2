@@ -59,6 +59,7 @@
             this.lblAntalTecken = new System.Windows.Forms.Label();
             this.lblRad = new System.Windows.Forms.Label();
             this.lblPlats = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
@@ -203,7 +204,7 @@
             this.mittenToolStripMenuItem,
             this.högerToolStripMenuItem});
             this.ändraIkonerToolStripMenuItem.Name = "ändraIkonerToolStripMenuItem";
-            this.ändraIkonerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ändraIkonerToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.ändraIkonerToolStripMenuItem.Text = "Ändra ikoner";
             // 
             // vänsterToolStripMenuItem
@@ -350,11 +351,22 @@
             this.lblPlats.TabIndex = 16;
             this.lblPlats.Text = "Plats:";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(843, 114);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 17;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1123, 528);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.lblPlats);
             this.Controls.Add(this.lblRad);
             this.Controls.Add(this.lblAntalTecken);
@@ -417,6 +429,7 @@
         private System.Windows.Forms.Label lblAntalTecken;
         private System.Windows.Forms.Label lblRad;
         private System.Windows.Forms.Label lblPlats;
+        private System.Windows.Forms.Button button1;
     }
 }
 

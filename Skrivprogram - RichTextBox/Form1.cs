@@ -341,16 +341,19 @@ namespace Skrivprogram___RichTextBox
                 // Get the character's formatting
                 int charFormatStart = richTextBox1.GetFirstCharIndexFromLine(richTextBox1.GetLineFromCharIndex(i));
                 int charFormatLength = i - charFormatStart + 1;
-                //string charFormat = richTextBox1.Text.Substring(charFormatStart, charFormatLength);
 
                 // Get the font style of the character
                 richTextBox1.SelectionStart = i;
                 Font charFormatFont = richTextBox1.SelectionFont;
+                FontStyle fontStyle = richTextBox1.SelectionFont.Style;
                 Color charColor = richTextBox1.SelectionColor;
 
-                // Print out the character, its formatting and font style
-                //rtbDebug.AppendText("Character: " + currentChar + ", Font: " + charFormatFont + ", Color: " + charColor);
-                textExtra = textExtra + "{" + currentChar + "Î" + charFormatFont + "Î" + charColor + "}";
+                
+
+                // Formats the file correctly with all nessecary values
+                textExtra = textExtra + "{" + currentChar + "Î" + charFormatFont + "Î" + fontStyle + "Î" + charColor + "}";
+
+                
             }
             return textExtra;
         }
@@ -369,34 +372,25 @@ namespace Skrivprogram___RichTextBox
                 List<string> format = text.Split('Î').ToList();
                 richTextBox1.AppendText(format[0]);
                 richTextBox1.Select(index, 1);
-                richTextBox1.SelectionFont = decodeFont(format[1]);
+                richTextBox1.SelectionFont = decodeFont(format[1], format[2]);
                 
-
+                // Extract and set color from file
                 string colorName = format[2].Substring(7);
                 colorName = colorName.Remove(colorName.Length - 1, 1);
                 richTextBox1.SelectionColor = Color.FromName(colorName);
-                
-                //richTextBox1.SelectionFont = format[1];
+
 
                 index++;
             }
         }
 
-        private Font decodeFont(string fontString)
+        private Font decodeFont(string fontString, string fontStyle)
         {
-            //string fontString = "[Font: Name=Microsoft Sans Serif, Size=9, Units=3, GdiCharSet=0, GdiVerticalFont=False]";
-
-            // Remove the "[Font: " and "]" from the string
-            fontString = fontString.Remove(0, 7);
+            // Remove ] from the end of the string
             fontString = fontString.Remove(fontString.Length - 1);
 
-            // Split the string into individual properties
             string[] properties = fontString.Split(',');
-
-            // Create a new Font object with the default font style
             Font font = new Font(properties[0].Split('=')[1], 9);
-
-            // Apply the remaining properties to the font
             for (int i = 1; i < properties.Length; i++)
             {
                 string[] property = properties[i].Split('=');
@@ -405,19 +399,31 @@ namespace Skrivprogram___RichTextBox
 
                 if (propertyName.Contains("Size"))
                 {
-                    //MessageBox.Show("Size" + propertyValue);
                     float size = float.Parse(propertyValue);
                     font = new Font(font.Name, size);
                 }
 
-                rtbDebug.AppendText(properties[i].ToString() + "\n");
+                if (fontStyle != "")
+                {
+                    var fontSyle = (FontStyle)Enum.Parse((typeof(FontStyle)), fontStyle);
+                    font = new Font(font.Name, font.Size, fontSyle);
+                }
+
+
+                //rtbDebug.AppendText(properties[i].ToString() + "\n");
             }
-            //rtbDebug.AppendText(font.ToString() + "\n");
             return font;
 
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            FontStyle style = richTextBox1.SelectionFont.Style;
 
+            Font font = new Font(richTextBox1.SelectionFont, FontStyle.Bold | FontStyle.Italic);
+            MessageBox.Show(font.ToString());
+        }
 
+        
     }
 }
