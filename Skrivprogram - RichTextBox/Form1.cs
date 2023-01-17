@@ -371,6 +371,11 @@ namespace Skrivprogram___RichTextBox
                 richTextBox1.Select(index, 1);
                 richTextBox1.SelectionFont = decodeFont(format[1]);
                 
+
+                string colorName = format[2].Substring(7);
+                colorName = colorName.Remove(colorName.Length - 1, 1);
+                richTextBox1.SelectionColor = Color.FromName(colorName);
+                
                 //richTextBox1.SelectionFont = format[1];
 
                 index++;
@@ -411,6 +416,8 @@ namespace Skrivprogram___RichTextBox
             return font;
 
         }
+
+
 
     }
 }
