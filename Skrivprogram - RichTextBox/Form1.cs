@@ -254,7 +254,6 @@ namespace Skrivprogram___RichTextBox
             save();
         }
 
-
         private void nyttToolStripMenuItem_Click(object sender, EventArgs e)
         {
             newFile();
@@ -263,13 +262,16 @@ namespace Skrivprogram___RichTextBox
         private void richTextBox1_TextChanged(object sender, EventArgs e)
         {
             sparat = false;
-            
-            if (!ActiveForm.Text.Contains("(unsaved)"))
-            {
-                string title = ActiveForm.Text + " (unsaved)";
-                ActiveForm.Text = title;
-            }
 
+            if (ActiveForm != null)
+            {
+                if (!ActiveForm.Text.Contains("(unsaved)"))
+                {
+                    string title = ActiveForm.Text + " (unsaved)";
+                    ActiveForm.Text = title;
+                }
+            }
+            
             lblAntalOrd.Text = "Antal ord: " + ordräknare();
             lblAntalTecken.Text = "Antal tecken: " + teckenräknare().ToString();
 
@@ -311,6 +313,39 @@ namespace Skrivprogram___RichTextBox
             lblRad.Text = getCurrentRow();
 
             lblPlats.Text = getCurrentPosition();
+
+            Font selectedFont = richTextBox1.SelectionFont;
+            if (selectedFont != null)
+            {
+                Font font = new Font(selectedFont.Name, 8);
+
+                cbxFonts.Text = font.Name;
+                cbxFonts.Font = font;
+
+                btnFont.Text = font.Name;
+                btnFont.Font = font;
+
+                numericUpDown1.Value = (int)richTextBox1.SelectionFont.Size;
+
+                cbxBold.Checked = selectedFont.Bold;
+                cbxItalic.Checked = selectedFont.Italic;
+            }
+
+            HorizontalAlignment alignment = richTextBox1.SelectionAlignment;
+            switch (alignment)
+            {
+                case HorizontalAlignment.Left:
+                    rdbVänster.Checked = true;
+                    break;
+                case HorizontalAlignment.Right:
+                    rdbHöger.Checked = true;
+                    break;
+                case HorizontalAlignment.Center:
+                    rdbCenter.Checked = true;
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void showErrorMessage(Exception error)
@@ -362,6 +397,16 @@ namespace Skrivprogram___RichTextBox
         private void görOmToolStripMenuItem_Click(object sender, EventArgs e)
         {
             richTextBox1.Redo();
+        }
+
+        private void boldToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            cbxBold.Checked = !cbxBold.Checked;
+        }
+
+        private void italicToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            cbxItalic.Checked = !cbxItalic.Checked;
         }
     }
 }
