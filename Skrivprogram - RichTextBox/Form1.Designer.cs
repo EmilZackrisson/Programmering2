@@ -53,13 +53,10 @@
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.cbxBold = new System.Windows.Forms.CheckBox();
             this.cbxItalic = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.lblAntalOrd = new System.Windows.Forms.Label();
-            this.rtbDebug = new System.Windows.Forms.RichTextBox();
             this.lblAntalTecken = new System.Windows.Forms.Label();
             this.lblRad = new System.Windows.Forms.Label();
             this.lblPlats = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             this.ändraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.kopieraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.klippUtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -149,7 +146,7 @@
             this.inställningarToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1123, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(837, 24);
             this.menuStrip1.TabIndex = 6;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -306,15 +303,6 @@
             this.cbxItalic.UseVisualStyleBackColor = true;
             this.cbxItalic.CheckedChanged += new System.EventHandler(this.cbxItalic_CheckedChanged);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(840, 84);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 11;
-            this.label1.Text = "label1";
-            // 
             // lblAntalOrd
             // 
             this.lblAntalOrd.AutoSize = true;
@@ -323,14 +311,6 @@
             this.lblAntalOrd.Size = new System.Drawing.Size(53, 13);
             this.lblAntalOrd.TabIndex = 12;
             this.lblAntalOrd.Text = "Ordantal: ";
-            // 
-            // rtbDebug
-            // 
-            this.rtbDebug.Location = new System.Drawing.Point(843, 220);
-            this.rtbDebug.Name = "rtbDebug";
-            this.rtbDebug.Size = new System.Drawing.Size(247, 245);
-            this.rtbDebug.TabIndex = 13;
-            this.rtbDebug.Text = "";
             // 
             // lblAntalTecken
             // 
@@ -358,16 +338,6 @@
             this.lblPlats.Size = new System.Drawing.Size(33, 13);
             this.lblPlats.TabIndex = 16;
             this.lblPlats.Text = "Plats:";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(843, 114);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 17;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // ändraToolStripMenuItem
             // 
@@ -434,14 +404,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1123, 528);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(837, 528);
             this.Controls.Add(this.lblPlats);
             this.Controls.Add(this.lblRad);
             this.Controls.Add(this.lblAntalTecken);
-            this.Controls.Add(this.rtbDebug);
             this.Controls.Add(this.lblAntalOrd);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.panelColor);
             this.Controls.Add(this.cbxItalic);
@@ -492,13 +459,10 @@
         private System.Windows.Forms.CheckBox cbxItalic;
         private System.Windows.Forms.ToolStripMenuItem nyttToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sparaToolStripMenuItem1;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblAntalOrd;
-        private System.Windows.Forms.RichTextBox rtbDebug;
         private System.Windows.Forms.Label lblAntalTecken;
         private System.Windows.Forms.Label lblRad;
         private System.Windows.Forms.Label lblPlats;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ToolStripMenuItem ändraToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem kopieraToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem klippUtToolStripMenuItem;

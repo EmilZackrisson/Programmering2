@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows.Forms;
 using static System.Net.Mime.MediaTypeNames;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
+using Image = System.Drawing.Image;
 
 namespace Skrivprogram___RichTextBox
 {
@@ -67,7 +68,7 @@ namespace Skrivprogram___RichTextBox
             {
                 if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 {
-                    //rdbVänster.Image = Image.FromFile(openFileDialog1.FileName);
+                    rdbVänster.Image = Image.FromFile(openFileDialog1.FileName);
                 }
             }
         }
@@ -81,7 +82,7 @@ namespace Skrivprogram___RichTextBox
             {
                 if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 {
-                    //rdbCenter.Image = Image.FromFile(openFileDialog1.FileName);
+                    rdbCenter.Image = Image.FromFile(openFileDialog1.FileName);
                 }
             }
         }
@@ -95,7 +96,7 @@ namespace Skrivprogram___RichTextBox
             {
                 if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 {
-                    //rdbHöger.Image = Image.FromFile(openFileDialog1.FileName);
+                    rdbHöger.Image = Image.FromFile(openFileDialog1.FileName);
                 }
             }
         }
@@ -310,14 +311,6 @@ namespace Skrivprogram___RichTextBox
             lblRad.Text = getCurrentRow();
 
             lblPlats.Text = getCurrentPosition();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            FontStyle style = richTextBox1.SelectionFont.Style;
-
-            Font font = new Font(richTextBox1.SelectionFont, FontStyle.Bold | FontStyle.Italic);
-            MessageBox.Show(font.ToString());
         }
 
         private void showErrorMessage(Exception error)
