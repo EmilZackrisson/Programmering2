@@ -14,6 +14,7 @@ namespace Skrivprogram___RichTextBox
     {
         bool sparat = false;
         string savePath = "";
+        Skitformat Skitformat = new Skitformat();
 
         public Form1()
         {
@@ -152,12 +153,13 @@ namespace Skrivprogram___RichTextBox
             {
                 savePath = saveFileDialog1.FileName;
 
-                string text = läsFormattering();
+                //string text = läsFormattering();
+                string text = Skitformat.richTextBoxToString(richTextBox1);
                 File.WriteAllText(savePath, text);
 
                 sparat = true;
                 string filenameWithExtention = Path.GetFileName(saveFileDialog1.FileName);
-                Form1.ActiveForm.Text = filenameWithExtention;
+                ActiveForm.Text = filenameWithExtention;
             }
         }
 
@@ -169,11 +171,13 @@ namespace Skrivprogram___RichTextBox
             {
                 if (savePath != "")
                 {
-                    File.WriteAllText(savePath, läsFormattering());
+                    //File.WriteAllText(savePath, läsFormattering());
+                    File.WriteAllText(savePath, Skitformat.richTextBoxToString(richTextBox1));
+
                     sparat = true;
 
                     string filenameWithExtention = Path.GetFileName(savePath);
-                    Form1.ActiveForm.Text = filenameWithExtention;
+                    ActiveForm.Text = filenameWithExtention;
                 }
                 else
                 {
@@ -193,7 +197,8 @@ namespace Skrivprogram___RichTextBox
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 string text = File.ReadAllText(openFileDialog1.FileName);
-                decodeFormatting(text);
+                //decodeFormatting(text);
+                Skitformat.readFile(richTextBox1, text);
                 sparat = true;
                 Form1.ActiveForm.Text = openFileDialog1.SafeFileName;
                 savePath = openFileDialog1.FileName;
@@ -257,12 +262,12 @@ namespace Skrivprogram___RichTextBox
         private void richTextBox1_TextChanged(object sender, EventArgs e)
         {
             sparat = false;
-            if (!Form1.ActiveForm.Text.Contains("(unsaved)"))
+            
+            if (!ActiveForm.Text.Contains("(unsaved)"))
             {
-                string title = Form1.ActiveForm.Text + " (unsaved)";
-                Form1.ActiveForm.Text = title;
+                string title = ActiveForm.Text + " (unsaved)";
+                ActiveForm.Text = title;
             }
-            //läsFormattering();
 
             lblAntalOrd.Text = "Antal ord: " + ordräknare();
             lblAntalTecken.Text = "Antal tecken: " + teckenräknare().ToString();
@@ -302,117 +307,9 @@ namespace Skrivprogram___RichTextBox
 
         private void richTextBox1_SelectionChanged(object sender, EventArgs e)
         {
-            int nuvarandeRad = richTextBox1.GetLineFromCharIndex(richTextBox1.GetFirstCharIndexOfCurrentLine()) + 1;
-            lblRad.Text = "Rad: " + nuvarandeRad.ToString();
+            lblRad.Text = getCurrentRow();
 
-            int plats = richTextBox1.SelectionStart - richTextBox1.GetFirstCharIndexOfCurrentLine();
-            lblPlats.Text = plats.ToString();
-        }
-
-        private string läsFormattering()
-        {
-            string text = richTextBox1.Text;
-            string textExtra = "";
-            for (int i = 0; i < text.Length; i++)
-            {
-                // Extract the character at the current index
-                char currentChar = text[i];
-
-                // Get the character's formatting
-                int charFormatStart = richTextBox1.GetFirstCharIndexFromLine(richTextBox1.GetLineFromCharIndex(i));
-                int charFormatLength = i - charFormatStart + 1;
-
-                // Get the font style of the character
-                richTextBox1.SelectionStart = i;
-                Font charFormatFont = richTextBox1.SelectionFont;
-                FontStyle fontStyle = richTextBox1.SelectionFont.Style;
-                Color charColor = richTextBox1.SelectionColor;
-
-                
-
-                // Formats the file correctly with all nessecary values
-                textExtra = textExtra + "{" + currentChar + "Î" + charFormatFont + "Î" + fontStyle + "Î" + charColor + "}";
-
-                
-            }
-            return textExtra;
-        }
-
-        
-
-        private void decodeFormatting(string formattedText)
-        {
-            try
-            {
-                richTextBox1.Clear();
-                List<string> tecken = formattedText.Split('}').ToList();
-                tecken.RemoveAt(tecken.Count - 1);
-                int index = 0;
-                foreach (string teckenItem in tecken)
-                {
-                    //rtbDebug.AppendText(teckenItem + "\n");
-                    string text = teckenItem.Remove(0, 1);
-                    List<string> format = text.Split('Î').ToList();
-                    richTextBox1.AppendText(format[0]);
-                    richTextBox1.Select(index, 1);
-                    richTextBox1.SelectionFont = decodeFont(format[1], format[2]);
-
-                    // Extract and set color from file
-                    string colorName = format[2].Substring(7);
-                    colorName = colorName.Remove(colorName.Length - 1, 1);
-                    richTextBox1.SelectionColor = Color.FromName(colorName);
-
-
-                    index++;
-                }
-            }
-            catch (Exception error)
-            {
-                showErrorMessage(error);
-                throw;
-            }
-            
-        }
-
-        private Font decodeFont(string fontString, string fontStyle)
-        {
-            try
-            {
-                // Remove ] from the end of the string
-                fontString = fontString.Remove(fontString.Length - 1);
-
-                string[] properties = fontString.Split(',');
-                Font font = new Font(properties[0].Split('=')[1], 9);
-                for (int i = 1; i < properties.Length; i++)
-                {
-                    string[] property = properties[i].Split('=');
-                    string propertyName = property[0].Trim();
-                    string propertyValue = property[1].Trim();
-
-                    if (propertyName.Contains("Size"))
-                    {
-                        float size = float.Parse(propertyValue);
-                        font = new Font(font.Name, size);
-                    }
-
-                    if (fontStyle != "")
-                    {
-                        var fontSyle = (FontStyle)Enum.Parse((typeof(FontStyle)), fontStyle);
-                        font = new Font(font.Name, font.Size, fontSyle);
-                    }
-
-
-                    //rtbDebug.AppendText(properties[i].ToString() + "\n");
-                }
-                return font;
-            }
-            catch (Exception error)
-            {
-                showErrorMessage(error);
-                throw;
-            }
-            
-
+            lblPlats.Text = getCurrentPosition();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -428,6 +325,17 @@ namespace Skrivprogram___RichTextBox
             MessageBox.Show(error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
+        private string getCurrentRow()
+        {
+            int nuvarandeRad = richTextBox1.GetLineFromCharIndex(richTextBox1.GetFirstCharIndexOfCurrentLine()) + 1;
+            return "Rad" + nuvarandeRad.ToString();
+        }
+
+        private string getCurrentPosition()
+        {
+            int plats = richTextBox1.SelectionStart - richTextBox1.GetFirstCharIndexOfCurrentLine();
+            return "Position: " + plats.ToString();
+        }
         
     }
 }
