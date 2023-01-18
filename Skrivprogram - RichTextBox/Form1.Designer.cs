@@ -60,6 +60,13 @@
             this.lblRad = new System.Windows.Forms.Label();
             this.lblPlats = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.ändraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.kopieraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.klippUtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.klistraInToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.markeraAlltToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ångraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.görOmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
@@ -138,6 +145,7 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.arkivToolStripMenuItem,
+            this.ändraToolStripMenuItem,
             this.inställningarToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -361,6 +369,67 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // ändraToolStripMenuItem
+            // 
+            this.ändraToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.kopieraToolStripMenuItem,
+            this.klippUtToolStripMenuItem,
+            this.klistraInToolStripMenuItem,
+            this.markeraAlltToolStripMenuItem,
+            this.ångraToolStripMenuItem,
+            this.görOmToolStripMenuItem});
+            this.ändraToolStripMenuItem.Name = "ändraToolStripMenuItem";
+            this.ändraToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
+            this.ändraToolStripMenuItem.Text = "Ändra";
+            // 
+            // kopieraToolStripMenuItem
+            // 
+            this.kopieraToolStripMenuItem.Name = "kopieraToolStripMenuItem";
+            this.kopieraToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.kopieraToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.kopieraToolStripMenuItem.Text = "Kopiera";
+            this.kopieraToolStripMenuItem.Click += new System.EventHandler(this.kopieraToolStripMenuItem_Click);
+            // 
+            // klippUtToolStripMenuItem
+            // 
+            this.klippUtToolStripMenuItem.Name = "klippUtToolStripMenuItem";
+            this.klippUtToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
+            this.klippUtToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.klippUtToolStripMenuItem.Text = "Klipp ut";
+            this.klippUtToolStripMenuItem.Click += new System.EventHandler(this.klippUtToolStripMenuItem_Click);
+            // 
+            // klistraInToolStripMenuItem
+            // 
+            this.klistraInToolStripMenuItem.Name = "klistraInToolStripMenuItem";
+            this.klistraInToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
+            this.klistraInToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.klistraInToolStripMenuItem.Text = "Klistra in";
+            this.klistraInToolStripMenuItem.Click += new System.EventHandler(this.klistraInToolStripMenuItem_Click);
+            // 
+            // markeraAlltToolStripMenuItem
+            // 
+            this.markeraAlltToolStripMenuItem.Name = "markeraAlltToolStripMenuItem";
+            this.markeraAlltToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
+            this.markeraAlltToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.markeraAlltToolStripMenuItem.Text = "Markera allt";
+            this.markeraAlltToolStripMenuItem.Click += new System.EventHandler(this.markeraAlltToolStripMenuItem_Click);
+            // 
+            // ångraToolStripMenuItem
+            // 
+            this.ångraToolStripMenuItem.Name = "ångraToolStripMenuItem";
+            this.ångraToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
+            this.ångraToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ångraToolStripMenuItem.Text = "Ångra";
+            this.ångraToolStripMenuItem.Click += new System.EventHandler(this.ångraToolStripMenuItem_Click);
+            // 
+            // görOmToolStripMenuItem
+            // 
+            this.görOmToolStripMenuItem.Name = "görOmToolStripMenuItem";
+            this.görOmToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
+            this.görOmToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.görOmToolStripMenuItem.Text = "Gör om";
+            this.görOmToolStripMenuItem.Click += new System.EventHandler(this.görOmToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -430,6 +499,13 @@
         private System.Windows.Forms.Label lblRad;
         private System.Windows.Forms.Label lblPlats;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ToolStripMenuItem ändraToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem kopieraToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem klippUtToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem klistraInToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem markeraAlltToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ångraToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem görOmToolStripMenuItem;
     }
 }
 

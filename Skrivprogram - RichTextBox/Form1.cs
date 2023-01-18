@@ -336,6 +336,39 @@ namespace Skrivprogram___RichTextBox
             int plats = richTextBox1.SelectionStart - richTextBox1.GetFirstCharIndexOfCurrentLine();
             return "Position: " + plats.ToString();
         }
-        
+
+        private void kopieraToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(richTextBox1.SelectedText);
+        }
+
+        private void klippUtToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(richTextBox1.SelectedText);
+            int length = richTextBox1.SelectionLength;
+            richTextBox1.Text = richTextBox1.Text.Remove(richTextBox1.SelectionStart, length);
+        }
+
+        private void klistraInToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int index = richTextBox1.SelectionStart;
+            string clipboardText = Clipboard.GetText();
+            richTextBox1.Text = richTextBox1.Text.Insert(index, clipboardText);
+        }
+
+        private void markeraAlltToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            richTextBox1.SelectAll();
+        }
+
+        private void ångraToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            richTextBox1.Undo();
+        }
+
+        private void görOmToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            richTextBox1.Redo();
+        }
     }
 }
