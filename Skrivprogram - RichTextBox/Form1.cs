@@ -188,9 +188,7 @@ namespace Skrivprogram___RichTextBox
             catch (Exception error)
             {
                 showErrorMessage(error);
-            } 
-
-
+            }
         }
 
         private void open()
@@ -274,8 +272,6 @@ namespace Skrivprogram___RichTextBox
             
             lblAntalOrd.Text = "Antal ord: " + ordräknare();
             lblAntalTecken.Text = "Antal tecken: " + teckenräknare().ToString();
-
-
         }
         private int ordräknare()
         {
