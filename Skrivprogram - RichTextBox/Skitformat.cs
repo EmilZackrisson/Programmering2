@@ -32,9 +32,10 @@ namespace Skrivprogram___RichTextBox
                 Font charFormatFont = richTextBox.SelectionFont;
                 FontStyle fontStyle = richTextBox.SelectionFont.Style;
                 Color charColor = richTextBox.SelectionColor;
+                HorizontalAlignment alignment = richTextBox.SelectionAlignment;
 
                 // Formats the file correctly with all nessecary values
-                textExtra = textExtra + "{" + currentChar + "Î" + charFormatFont + "Î" + fontStyle + "Î" + charColor + "}";
+                textExtra = textExtra + "{" + currentChar + "Î" + charFormatFont + "Î" + fontStyle + "Î" + charColor + "Î" + alignment + "}";
             }
             return textExtra;
         }
@@ -64,6 +65,9 @@ namespace Skrivprogram___RichTextBox
                     string colorName = format[3].Substring(7);
                     colorName = colorName.Remove(colorName.Length - 1, 1);
                     richTextBox.SelectionColor = Color.FromName(colorName);
+
+                    var horizontalAlignment = (HorizontalAlignment)Enum.Parse(typeof(HorizontalAlignment), format[4]);
+                    richTextBox.SelectionAlignment = horizontalAlignment;
 
                     index++;
                 }
