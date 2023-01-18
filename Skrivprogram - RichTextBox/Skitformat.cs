@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Forms;
 using RichTextBox = System.Windows.Forms.RichTextBox;
 
@@ -66,6 +63,7 @@ namespace Skrivprogram___RichTextBox
                     colorName = colorName.Remove(colorName.Length - 1, 1);
                     richTextBox.SelectionColor = Color.FromName(colorName);
 
+                    // Set the horizontal alignment from file
                     var horizontalAlignment = (HorizontalAlignment)Enum.Parse(typeof(HorizontalAlignment), format[4]);
                     richTextBox.SelectionAlignment = horizontalAlignment;
 
