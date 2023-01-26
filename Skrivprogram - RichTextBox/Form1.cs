@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Text;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using static System.Net.Mime.MediaTypeNames;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 using Image = System.Drawing.Image;
 
 namespace Skrivprogram___RichTextBox
@@ -166,7 +163,7 @@ namespace Skrivprogram___RichTextBox
 
         private void save()
         {
-            
+
             // Sparar en fil med ett nytt fränt filformat (.skitformat)
             try
             {
@@ -196,7 +193,6 @@ namespace Skrivprogram___RichTextBox
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 string text = File.ReadAllText(openFileDialog1.FileName);
-                //decodeFormatting(text);
                 Skitformat.readFile(richTextBox1, text);
                 sparat = true;
                 Form1.ActiveForm.Text = openFileDialog1.SafeFileName;
@@ -269,9 +265,10 @@ namespace Skrivprogram___RichTextBox
                     ActiveForm.Text = title;
                 }
             }
-            
+
             lblAntalOrd.Text = "Antal ord: " + ordräknare();
             lblAntalTecken.Text = "Antal tecken: " + teckenräknare().ToString();
+
         }
         private int ordräknare()
         {
@@ -403,6 +400,20 @@ namespace Skrivprogram___RichTextBox
         private void italicToolStripMenuItem_Click(object sender, EventArgs e)
         {
             cbxItalic.Checked = !cbxItalic.Checked;
+        }
+
+        private void nudTabSize_ValueChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void richTextBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Tab)
+            {
+                e.SuppressKeyPress = true;
+                string spaces = new string(' ', (int)nudTabSize.Value);
+                richTextBox1.SelectedText += spaces;
+            }
         }
     }
 }

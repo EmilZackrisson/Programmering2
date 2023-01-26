@@ -54,6 +54,9 @@
             this.vänsterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mittenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.högerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stilToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.boldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.italicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.cbxFonts = new System.Windows.Forms.ComboBox();
@@ -64,11 +67,11 @@
             this.lblAntalTecken = new System.Windows.Forms.Label();
             this.lblRad = new System.Windows.Forms.Label();
             this.lblPlats = new System.Windows.Forms.Label();
-            this.stilToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.boldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.italicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nudTabSize = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudTabSize)).BeginInit();
             this.SuspendLayout();
             // 
             // btnFont
@@ -92,6 +95,7 @@
             this.richTextBox1.Text = "";
             this.richTextBox1.SelectionChanged += new System.EventHandler(this.richTextBox1_SelectionChanged);
             this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
+            this.richTextBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextBox1_KeyDown);
             // 
             // panelColor
             // 
@@ -192,7 +196,7 @@
             // sparaToolStripMenuItem
             // 
             this.sparaToolStripMenuItem.Name = "sparaToolStripMenuItem";
-            this.sparaToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            this.sparaToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
             | System.Windows.Forms.Keys.S)));
             this.sparaToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.sparaToolStripMenuItem.Text = "Spara som";
@@ -274,7 +278,7 @@
             this.mittenToolStripMenuItem,
             this.högerToolStripMenuItem});
             this.ändraIkonerToolStripMenuItem.Name = "ändraIkonerToolStripMenuItem";
-            this.ändraIkonerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ändraIkonerToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.ändraIkonerToolStripMenuItem.Text = "Ändra ikoner";
             // 
             // vänsterToolStripMenuItem
@@ -297,6 +301,31 @@
             this.högerToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.högerToolStripMenuItem.Text = "Höger";
             this.högerToolStripMenuItem.Click += new System.EventHandler(this.högerToolStripMenuItem_Click);
+            // 
+            // stilToolStripMenuItem
+            // 
+            this.stilToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.boldToolStripMenuItem,
+            this.italicToolStripMenuItem});
+            this.stilToolStripMenuItem.Name = "stilToolStripMenuItem";
+            this.stilToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
+            this.stilToolStripMenuItem.Text = "Stil";
+            // 
+            // boldToolStripMenuItem
+            // 
+            this.boldToolStripMenuItem.Name = "boldToolStripMenuItem";
+            this.boldToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.B)));
+            this.boldToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.boldToolStripMenuItem.Text = "Bold";
+            this.boldToolStripMenuItem.Click += new System.EventHandler(this.boldToolStripMenuItem_Click);
+            // 
+            // italicToolStripMenuItem
+            // 
+            this.italicToolStripMenuItem.Name = "italicToolStripMenuItem";
+            this.italicToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
+            this.italicToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.italicToolStripMenuItem.Text = "Italic";
+            this.italicToolStripMenuItem.Click += new System.EventHandler(this.italicToolStripMenuItem_Click);
             // 
             // openFileDialog1
             // 
@@ -404,36 +433,35 @@
             this.lblPlats.TabIndex = 16;
             this.lblPlats.Text = "Plats:";
             // 
-            // stilToolStripMenuItem
+            // nudTabSize
             // 
-            this.stilToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.boldToolStripMenuItem,
-            this.italicToolStripMenuItem});
-            this.stilToolStripMenuItem.Name = "stilToolStripMenuItem";
-            this.stilToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
-            this.stilToolStripMenuItem.Text = "Stil";
+            this.nudTabSize.Location = new System.Drawing.Point(245, 496);
+            this.nudTabSize.Name = "nudTabSize";
+            this.nudTabSize.Size = new System.Drawing.Size(32, 20);
+            this.nudTabSize.TabIndex = 17;
+            this.nudTabSize.Value = new decimal(new int[] {
+            4,
+            0,
+            0,
+            0});
+            this.nudTabSize.ValueChanged += new System.EventHandler(this.nudTabSize_ValueChanged);
             // 
-            // boldToolStripMenuItem
+            // label1
             // 
-            this.boldToolStripMenuItem.Name = "boldToolStripMenuItem";
-            this.boldToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.B)));
-            this.boldToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.boldToolStripMenuItem.Text = "Bold";
-            this.boldToolStripMenuItem.Click += new System.EventHandler(this.boldToolStripMenuItem_Click);
-            // 
-            // italicToolStripMenuItem
-            // 
-            this.italicToolStripMenuItem.Name = "italicToolStripMenuItem";
-            this.italicToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
-            this.italicToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.italicToolStripMenuItem.Text = "Italic";
-            this.italicToolStripMenuItem.Click += new System.EventHandler(this.italicToolStripMenuItem_Click);
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(176, 499);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(63, 13);
+            this.label1.TabIndex = 18;
+            this.label1.Text = "Tab-storlek:";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(837, 528);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.nudTabSize);
             this.Controls.Add(this.lblPlats);
             this.Controls.Add(this.lblRad);
             this.Controls.Add(this.lblAntalTecken);
@@ -456,6 +484,7 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudTabSize)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -502,6 +531,8 @@
         private System.Windows.Forms.ToolStripMenuItem stilToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem boldToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem italicToolStripMenuItem;
+        private System.Windows.Forms.NumericUpDown nudTabSize;
+        private System.Windows.Forms.Label label1;
     }
 }
 
