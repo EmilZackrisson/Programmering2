@@ -196,7 +196,7 @@
             // sparaToolStripMenuItem
             // 
             this.sparaToolStripMenuItem.Name = "sparaToolStripMenuItem";
-            this.sparaToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+            this.sparaToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.S)));
             this.sparaToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.sparaToolStripMenuItem.Text = "Spara som";
@@ -435,7 +435,7 @@
             // 
             // nudTabSize
             // 
-            this.nudTabSize.Location = new System.Drawing.Point(245, 496);
+            this.nudTabSize.Location = new System.Drawing.Point(407, 497);
             this.nudTabSize.Name = "nudTabSize";
             this.nudTabSize.Size = new System.Drawing.Size(32, 20);
             this.nudTabSize.TabIndex = 17;
@@ -449,7 +449,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(176, 499);
+            this.label1.Location = new System.Drawing.Point(339, 500);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(63, 13);
             this.label1.TabIndex = 18;
