@@ -19,21 +19,47 @@ namespace TCP
         public Form1()
         {
             InitializeComponent();
+            klient.NoDelay = true;
         }
 
         private void btnSend_Click(object sender, EventArgs e)
         {
-            string text = rtbMessage.Text;
-            IPAddress address = IPAddress.Parse(tbxIp.Text);
-            klient = new TcpClient();
-            klient.NoDelay = true;
-            klient.Connect(address, port);
+            StartaSändning(rtbMessage.Text);
 
-            if (klient.Connected)
+        }
+
+        private void btnConnect_Click(object sender, EventArgs e)
+        {
+            if (!klient.Connected) StartaAnslutning();
+
+        }
+
+        public async void StartaAnslutning()
+        {
+            try
             {
-                byte[] utData = Encoding.UTF8.GetBytes(text);
-                klient.GetStream().Write(utData, 0, utData.Length);
-                klient.Close();
+                IPAddress address = IPAddress.Parse(tbxIp.Text);
+                await klient.ConnectAsync(address, port);
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(error.Message);
+            }
+            btnConnect.Enabled = false;
+            btnSend.Enabled = true;
+        }
+
+        public async void StartaSändning(string message)
+        {
+            byte[] utData = Encoding.UTF8.GetBytes(message);
+            try
+            {
+                await klient.GetStream().WriteAsync(utData, 0, utData.Length);
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(error.Message);
+                throw;
             }
         }
     }

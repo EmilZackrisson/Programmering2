@@ -66,7 +66,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(156, 174);
+            this.ClientSize = new System.Drawing.Size(156, 169);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnStartServer);
             this.Controls.Add(this.rtbInkorg);

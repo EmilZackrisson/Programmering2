@@ -27,15 +27,41 @@ namespace TCP_Server
         {
             lyssnare = new TcpListener(IPAddress.Any, port);
             lyssnare.Start();
-            // Väntar på connect i klienten:
-            klient = lyssnare.AcceptTcpClient();
 
-            byte[] inData = new byte[256];
-            int antalByte = klient.GetStream().Read(inData, 0, inData.Length);
+            btnStartServer.Enabled = false;
+            StartaMottagning();
+        }
 
-            rtbInkorg.Text = Encoding.UTF8.GetString(inData, 0, antalByte);
-            klient.Close();
-            lyssnare.Stop();
+
+
+        public async void StartaMottagning()
+        {
+            try
+            {
+                klient = await lyssnare.AcceptTcpClientAsync();
+            }
+            catch (Exception Error)
+            {
+                MessageBox.Show(Error.Message);
+            }
+            StartaLäsning(klient);
+        }
+
+        public async void StartaLäsning(TcpClient klient)
+        {
+            byte[] buffert = new byte[1024];
+            int n = 0;
+
+            try
+            {
+                n = await klient.GetStream().ReadAsync(buffert, 0, buffert.Length);
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(error.Message);
+            }
+            rtbInkorg.AppendText(Encoding.UTF8.GetString(buffert, 0, n));
+            StartaLäsning(klient);
         }
     }
 }
