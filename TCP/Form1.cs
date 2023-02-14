@@ -14,7 +14,7 @@ namespace TCP
 {
     public partial class Form1 : Form
     {
-        TcpClient klient;
+        TcpClient klient = new TcpClient();
         int port = 12345;
         public Form1()
         {

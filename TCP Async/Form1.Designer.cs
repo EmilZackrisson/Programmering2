@@ -1,4 +1,4 @@
-﻿namespace TCP_Server
+﻿namespace TCP_Async
 {
     partial class Form1
     {
@@ -28,60 +28,59 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.rtbInkorg = new System.Windows.Forms.RichTextBox();
             this.btnStartServer = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.gbxInkorg = new System.Windows.Forms.GroupBox();
+            this.rtbInkorg = new System.Windows.Forms.RichTextBox();
+            this.gbxInkorg.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // rtbInkorg
-            // 
-            this.rtbInkorg.Enabled = false;
-            this.rtbInkorg.Location = new System.Drawing.Point(12, 57);
-            this.rtbInkorg.Name = "rtbInkorg";
-            this.rtbInkorg.ReadOnly = true;
-            this.rtbInkorg.Size = new System.Drawing.Size(185, 96);
-            this.rtbInkorg.TabIndex = 0;
-            this.rtbInkorg.Text = "";
             // 
             // btnStartServer
             // 
-            this.btnStartServer.Location = new System.Drawing.Point(122, 12);
+            this.btnStartServer.Location = new System.Drawing.Point(290, 12);
             this.btnStartServer.Name = "btnStartServer";
             this.btnStartServer.Size = new System.Drawing.Size(75, 23);
-            this.btnStartServer.TabIndex = 1;
+            this.btnStartServer.TabIndex = 0;
             this.btnStartServer.Text = "Starta server";
             this.btnStartServer.UseVisualStyleBackColor = true;
             this.btnStartServer.Click += new System.EventHandler(this.btnStartServer_Click);
             // 
-            // label1
+            // gbxInkorg
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 38);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(37, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Inkorg";
+            this.gbxInkorg.Controls.Add(this.rtbInkorg);
+            this.gbxInkorg.Location = new System.Drawing.Point(12, 73);
+            this.gbxInkorg.Name = "gbxInkorg";
+            this.gbxInkorg.Size = new System.Drawing.Size(353, 187);
+            this.gbxInkorg.TabIndex = 1;
+            this.gbxInkorg.TabStop = false;
+            this.gbxInkorg.Text = "Inkorg";
+            // 
+            // rtbInkorg
+            // 
+            this.rtbInkorg.Location = new System.Drawing.Point(7, 20);
+            this.rtbInkorg.Name = "rtbInkorg";
+            this.rtbInkorg.Size = new System.Drawing.Size(340, 161);
+            this.rtbInkorg.TabIndex = 0;
+            this.rtbInkorg.Text = "";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(209, 169);
-            this.Controls.Add(this.label1);
+            this.ClientSize = new System.Drawing.Size(377, 272);
+            this.Controls.Add(this.gbxInkorg);
             this.Controls.Add(this.btnStartServer);
-            this.Controls.Add(this.rtbInkorg);
             this.Name = "Form1";
-            this.Text = "TCP-Server";
+            this.Text = "Form1";
+            this.gbxInkorg.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.RichTextBox rtbInkorg;
         private System.Windows.Forms.Button btnStartServer;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.GroupBox gbxInkorg;
+        private System.Windows.Forms.RichTextBox rtbInkorg;
     }
 }
 
