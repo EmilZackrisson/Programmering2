@@ -36,6 +36,8 @@
             this.btnJoin = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.tbxIp = new System.Windows.Forms.TextBox();
+            this.lblKord = new System.Windows.Forms.Label();
+            this.lblUppeVänster = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.boll)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.spelare)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.motståndare)).BeginInit();
@@ -120,12 +122,33 @@
             this.tbxIp.Size = new System.Drawing.Size(181, 20);
             this.tbxIp.TabIndex = 0;
             // 
+            // lblKord
+            // 
+            this.lblKord.AutoSize = true;
+            this.lblKord.ForeColor = System.Drawing.SystemColors.Control;
+            this.lblKord.Location = new System.Drawing.Point(348, 386);
+            this.lblKord.Name = "lblKord";
+            this.lblKord.Size = new System.Drawing.Size(35, 13);
+            this.lblKord.TabIndex = 4;
+            this.lblKord.Text = "label2";
+            // 
+            // lblUppeVänster
+            // 
+            this.lblUppeVänster.AutoSize = true;
+            this.lblUppeVänster.ForeColor = System.Drawing.Color.White;
+            this.lblUppeVänster.Location = new System.Drawing.Point(12, 9);
+            this.lblUppeVänster.Name = "lblUppeVänster";
+            this.lblUppeVänster.Size = new System.Drawing.Size(0, 13);
+            this.lblUppeVänster.TabIndex = 5;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.ClientSize = new System.Drawing.Size(799, 450);
+            this.Controls.Add(this.lblUppeVänster);
+            this.Controls.Add(this.lblKord);
             this.Controls.Add(this.gbxMenu);
             this.Controls.Add(this.boll);
             this.Controls.Add(this.spelare);
@@ -133,7 +156,6 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
-            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyUp);
             ((System.ComponentModel.ISupportInitialize)(this.boll)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.spelare)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.motståndare)).EndInit();
@@ -141,6 +163,7 @@
             this.gbxJoin.ResumeLayout(false);
             this.gbxJoin.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -154,6 +177,8 @@
         private System.Windows.Forms.Button btnJoin;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tbxIp;
+        private System.Windows.Forms.Label lblKord;
+        private System.Windows.Forms.Label lblUppeVänster;
     }
 }
 

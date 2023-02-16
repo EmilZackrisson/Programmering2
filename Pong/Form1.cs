@@ -53,9 +53,11 @@ namespace Pong
             try
             {
                 IPAddress address = IPAddress.Parse(tbxIp.Text);
+                lblUppeVänster.Text = "Försöker ansluta till: " + address.ToString();
                 await klient.ConnectAsync(address, port);
                 if (klient.Connected)
                 {
+                    send("redo");
                     MessageBox.Show("Ansluten!");
                 }
             }
@@ -84,10 +86,9 @@ namespace Pong
         public async void StartaLäsning(TcpClient klient)
         {
             byte[] buffer = new byte[1024];
-            int n = 0;
             try
             {
-                n = await klient.GetStream().ReadAsync(buffer, 0, buffer.Length);
+                int n = await klient.GetStream().ReadAsync(buffer, 0, buffer.Length);
                 StartaLäsning(klient);
             }
             catch (Exception err)
@@ -95,7 +96,9 @@ namespace Pong
                 MessageBox.Show(err.Message);
                 return;
             }
-            //rtbInkorg.AppendText(Encoding.UTF8.GetString(buffer) + Environment.NewLine);
+            string message = Encoding.UTF8.GetString(buffer);
+            lblUppeVänster.Text = message;
+
             StartaLäsning(klient);
         }
 
@@ -131,27 +134,32 @@ namespace Pong
 
         private async void Form1_KeyDown(object sender, KeyEventArgs e)
         {
+            e.SuppressKeyPress = true;
+            Point point = spelare.Location;
+            Size formSize = Size;
+
+            lblKord.Text = point.X.ToString() + ", " + point.Y.ToString();
+
+
             if (e.KeyCode == Keys.Up)
             {
-                Point point = spelare.Location;
                 point.Y = point.Y - 20;
+
+                if(point.Y <= 0) return;
 
                 spelare.Location = point;
                 await Task.Delay(100);
             }
             if (e.KeyCode == Keys.Down)
             {
-                Point point = spelare.Location;
                 point.Y = point.Y + 20;
+
+                if (point.Y + 70 >= formSize.Height) return;
+                
 
                 spelare.Location = point;
                 await Task.Delay(100);
             }
-        }
-
-        private void Form1_KeyUp(object sender, KeyEventArgs e)
-        {
-            send("stop");
         }
     }
 }
