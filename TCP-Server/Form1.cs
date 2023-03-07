@@ -58,12 +58,12 @@ namespace TCP_Server
         public async void StartaLäsning(TcpClient klient)
         {
             byte[] buffert = new byte[1024];
-            int n = 0;
 
             try
             {
-                n = await klient.GetStream().ReadAsync(buffert, 0, buffert.Length);
-                string text = Encoding.UTF8.GetString(buffert, 0, n);
+                await klient.GetStream().ReadAsync(buffert, 0, buffert.Length);
+                string text = Encoding.UTF8.GetString(buffert);
+                Log(text);
 
                 if (text.Contains("Left"))
                 {
@@ -76,9 +76,10 @@ namespace TCP_Server
             }
             catch (Exception error)
             {
-                MessageBox.Show(error.Message);
+                MessageBox.Show(error.ToString());
+                Log(error.ToString());
             }
-            rtbInkorg.AppendText(Encoding.UTF8.GetString(buffert, 0, n));
+            
             StartaLäsning(klient);
         }
 
@@ -111,6 +112,13 @@ namespace TCP_Server
             pnBall.Location = ballStart;
             playerLeft.Location = playerLeftStart;
             playerRight.Location = playerRightStart;
+        }
+
+        private void Log(string message)
+        {
+            rtbInkorg.Text += message + Environment.NewLine;
+            rtbInkorg.SelectionStart = rtbInkorg.Text.Length;
+            rtbInkorg.ScrollToCaret();
         }
 
 

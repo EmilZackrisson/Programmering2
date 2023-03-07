@@ -33,12 +33,12 @@
             this.btnStartServer = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.pnLeft = new System.Windows.Forms.Panel();
-            this.pnRight = new System.Windows.Forms.Panel();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.pnBall = new System.Windows.Forms.Panel();
-            this.pnTop = new System.Windows.Forms.Panel();
             this.pnBottom = new System.Windows.Forms.Panel();
+            this.pnTop = new System.Windows.Forms.Panel();
+            this.pnBall = new System.Windows.Forms.Panel();
+            this.pnRight = new System.Windows.Forms.Panel();
+            this.pnLeft = new System.Windows.Forms.Panel();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.lblLeftPoints = new System.Windows.Forms.Label();
             this.lblRightPoints = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
@@ -76,36 +76,29 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Black;
+            this.panel1.Controls.Add(this.pnRight);
             this.panel1.Controls.Add(this.pnBottom);
             this.panel1.Controls.Add(this.pnTop);
             this.panel1.Controls.Add(this.pnBall);
-            this.panel1.Controls.Add(this.pnRight);
             this.panel1.Controls.Add(this.pnLeft);
             this.panel1.Location = new System.Drawing.Point(586, 57);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(815, 489);
             this.panel1.TabIndex = 3;
             // 
-            // pnLeft
+            // pnBottom
             // 
-            this.pnLeft.BackColor = System.Drawing.Color.White;
-            this.pnLeft.Location = new System.Drawing.Point(3, 194);
-            this.pnLeft.Name = "pnLeft";
-            this.pnLeft.Size = new System.Drawing.Size(6, 50);
-            this.pnLeft.TabIndex = 0;
+            this.pnBottom.Location = new System.Drawing.Point(-1, 484);
+            this.pnBottom.Name = "pnBottom";
+            this.pnBottom.Size = new System.Drawing.Size(815, 10);
+            this.pnBottom.TabIndex = 4;
             // 
-            // pnRight
+            // pnTop
             // 
-            this.pnRight.BackColor = System.Drawing.Color.White;
-            this.pnRight.Location = new System.Drawing.Point(806, 194);
-            this.pnRight.Name = "pnRight";
-            this.pnRight.Size = new System.Drawing.Size(6, 50);
-            this.pnRight.TabIndex = 1;
-            // 
-            // timer1
-            // 
-            this.timer1.Interval = 20;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.pnTop.Location = new System.Drawing.Point(0, -6);
+            this.pnTop.Name = "pnTop";
+            this.pnTop.Size = new System.Drawing.Size(815, 10);
+            this.pnTop.TabIndex = 3;
             // 
             // pnBall
             // 
@@ -115,19 +108,26 @@
             this.pnBall.Size = new System.Drawing.Size(10, 10);
             this.pnBall.TabIndex = 2;
             // 
-            // pnTop
+            // pnRight
             // 
-            this.pnTop.Location = new System.Drawing.Point(0, -6);
-            this.pnTop.Name = "pnTop";
-            this.pnTop.Size = new System.Drawing.Size(815, 10);
-            this.pnTop.TabIndex = 3;
+            this.pnRight.BackColor = System.Drawing.Color.White;
+            this.pnRight.Location = new System.Drawing.Point(787, 171);
+            this.pnRight.Name = "pnRight";
+            this.pnRight.Size = new System.Drawing.Size(6, 50);
+            this.pnRight.TabIndex = 1;
             // 
-            // pnBottom
+            // pnLeft
             // 
-            this.pnBottom.Location = new System.Drawing.Point(-1, 484);
-            this.pnBottom.Name = "pnBottom";
-            this.pnBottom.Size = new System.Drawing.Size(815, 10);
-            this.pnBottom.TabIndex = 4;
+            this.pnLeft.BackColor = System.Drawing.Color.White;
+            this.pnLeft.Location = new System.Drawing.Point(3, 194);
+            this.pnLeft.Name = "pnLeft";
+            this.pnLeft.Size = new System.Drawing.Size(6, 50);
+            this.pnLeft.TabIndex = 0;
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 20;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // lblLeftPoints
             // 

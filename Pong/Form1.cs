@@ -16,7 +16,7 @@ namespace Pong
 {
     public partial class Form1 : Form
     {
-        TcpListener TcpListener;
+        //TcpListener TcpListener;
         TcpClient klient;
         Player playerRight;
         Player playerLeft;
@@ -24,7 +24,7 @@ namespace Pong
 
         // int port = 34512;
         int serverPort = 34512;
-        int klientPort = 23412;
+        bool gameRunning = false;
         public Form1()
         {
             InitializeComponent();
@@ -32,10 +32,10 @@ namespace Pong
 
         private void btnJoin_Click(object sender, EventArgs e)
         {
-            startaServer();
-            anslutTillServer();
+            //startaServer();
+            AnslutTillServer();
         }
-
+        /*
         private void startaServer()
         {
             try
@@ -52,9 +52,9 @@ namespace Pong
             gbxMenu.Enabled = false;
             gbxMenu.Visible = false;
             StartaMottagning();
-        }
+        }*/
 
-        private async void anslutTillServer()
+        private async void AnslutTillServer()
         {
             try
             {
@@ -65,11 +65,13 @@ namespace Pong
                 await klient.ConnectAsync(address, serverPort);
                 if (klient.Connected)
                 {
-                    send("redo");
+                    Send("redo");
                     MessageBox.Show("Ansluten!");
                     gbxMenu.Enabled = false;
                     gbxMenu.Visible = false;
-                    startGame();
+                    lblUppeVänster.Text = "Ansluten till: " + address.ToString();
+                    gameRunning = true;
+                    timer1.Start();
                 }
             }
             catch (Exception error)
@@ -78,7 +80,7 @@ namespace Pong
             }
         }
 
-
+        /*
         public async void StartaMottagning()
         {
             try
@@ -92,7 +94,7 @@ namespace Pong
                 MessageBox.Show(Error.Message);
             }
             StartaLäsning(klient);
-        }
+        }*/
 
         public async void StartaLäsning(TcpClient klient)
         {
@@ -114,7 +116,7 @@ namespace Pong
             StartaLäsning(klient);
         }
 
-        public async void send(string message)
+        public async void Send(string message)
         {
             byte[] utData = Encoding.UTF8.GetBytes(message);
             try
@@ -137,27 +139,6 @@ namespace Pong
             {
                 MessageBox.Show(error.Message);
             }
-        }
-
-        private void startGame()
-        {
-            sendLocation();
-        }
-
-        private async void sendLocation()
-        {
-            while (klient.Connected)
-            {
-                playerRight.Location = spelare.Location;
-                send(playerRight.ToString());
-                await Task.Delay(20);
-            }
-            MessageBox.Show("Not sending");
-        }
-
-        private async void ballLocation()
-        {
-            Point bollPoint = boll.Location;
         }
 
 
@@ -193,14 +174,42 @@ namespace Pong
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            klient.Close();
-            klient.Dispose();
+            try
+            {
+                klient.Close();
+                klient.Dispose();
+            }
+            catch { }
+            
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             playerRight = new Player(spelare.Location, "Right");
             playerLeft = new Player(motståndare.Location, "Left");
+        }
+
+        private async void ReadFromServer()
+        {
+            byte[] buffer = new byte[1024];
+            await klient.GetStream().ReadAsync(buffer, 0, buffer.Length);
+            string message = Encoding.UTF8.GetString(buffer);
+            lblUppeVänster.Text = message;
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (klient.Connected && gameRunning)
+            {
+                playerRight.Location = spelare.Location;
+                Send(playerRight.ToString());
+
+                ReadFromServer();
+            }
+            else
+            {
+                lblUppeVänster.Text = "Running: " + gameRunning + " Connected: " + klient.Connected;
+            }
         }
     }
 }

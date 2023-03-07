@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace TCP_Server
 {
@@ -26,23 +27,28 @@ namespace TCP_Server
 
         public void SetPlayer(string playerData)
         {
-            string[] data = playerData.Split(','); // 0=side, 1=location, 2=points
-            Side = data[0];
+            if (playerData.StartsWith("{") && playerData.EndsWith("}"))
+            {
+                playerData = playerData.Trim(new Char[] { ' ', '{', '}' });
+                string[] data = playerData.Split('|'); // 0=side, 1=location, 2=points
+                Side = data[0];
 
-            // Gets and sets location
-            string[] coords = data[1].Split(',');
-            coords[0] = coords[0].Remove(0, 3);
-            coords[1] = coords[1].Remove(0, 2);
-            coords[1] = coords[1].Remove(coords.Length - 1, 1);
-            Location = new Point(int.Parse(coords[0]), int.Parse(coords[1]));
+                // Gets and sets location
+                //string[] coords = data[1].Split(',');
+                //Location = new Point(int.Parse(coords[0]), int.Parse(coords[1]));
 
-            // Gets and sets points
-            Point = int.Parse(data[2]);
+                // Gets and sets points
+                Point = int.Parse(data[2]);
+            }
+            else
+            {
+                MessageBox.Show("SetPlayer fick fel indata:\n" + playerData);
+            }
         }
 
         public override string ToString()
         {
-            return Side + "," + Location + "," + Point;
+            return "{" + Side + "|" + Location.ToString() + "|" + Point + "}";
         }
     }
 }

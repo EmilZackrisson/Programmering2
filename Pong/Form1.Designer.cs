@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.boll = new System.Windows.Forms.PictureBox();
             this.spelare = new System.Windows.Forms.PictureBox();
             this.motståndare = new System.Windows.Forms.PictureBox();
@@ -38,6 +39,7 @@
             this.tbxIp = new System.Windows.Forms.TextBox();
             this.lblKord = new System.Windows.Forms.Label();
             this.lblUppeVänster = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.boll)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.spelare)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.motståndare)).BeginInit();
@@ -51,7 +53,7 @@
             this.boll.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.boll.Location = new System.Drawing.Point(375, 212);
             this.boll.Name = "boll";
-            this.boll.Size = new System.Drawing.Size(9, 9);
+            this.boll.Size = new System.Drawing.Size(10, 10);
             this.boll.TabIndex = 2;
             this.boll.TabStop = false;
             // 
@@ -141,6 +143,11 @@
             this.lblUppeVänster.Size = new System.Drawing.Size(0, 13);
             this.lblUppeVänster.TabIndex = 5;
             // 
+            // timer1
+            // 
+            this.timer1.Interval = 20;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -181,6 +188,7 @@
         private System.Windows.Forms.TextBox tbxIp;
         private System.Windows.Forms.Label lblKord;
         private System.Windows.Forms.Label lblUppeVänster;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 
