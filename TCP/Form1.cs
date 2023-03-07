@@ -15,7 +15,7 @@ namespace TCP
     public partial class Form1 : Form
     {
         TcpClient klient = new TcpClient();
-        int port = 12345;
+        int port = 34512;
         public Form1()
         {
             InitializeComponent();

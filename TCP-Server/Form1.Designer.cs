@@ -39,7 +39,7 @@
             this.rtbInkorg.Location = new System.Drawing.Point(12, 57);
             this.rtbInkorg.Name = "rtbInkorg";
             this.rtbInkorg.ReadOnly = true;
-            this.rtbInkorg.Size = new System.Drawing.Size(185, 96);
+            this.rtbInkorg.Size = new System.Drawing.Size(568, 502);
             this.rtbInkorg.TabIndex = 0;
             this.rtbInkorg.Text = "";
             // 
@@ -66,12 +66,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(209, 169);
+            this.ClientSize = new System.Drawing.Size(592, 571);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnStartServer);
             this.Controls.Add(this.rtbInkorg);
             this.Name = "Form1";
             this.Text = "TCP-Server";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

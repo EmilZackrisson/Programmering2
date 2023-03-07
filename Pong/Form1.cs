@@ -18,7 +18,13 @@ namespace Pong
     {
         TcpListener TcpListener;
         TcpClient klient;
-        int port = 34512;
+        Player playerRight;
+        Player playerLeft;
+
+
+        // int port = 34512;
+        int serverPort = 34512;
+        int klientPort = 23412;
         public Form1()
         {
             InitializeComponent();
@@ -34,7 +40,7 @@ namespace Pong
         {
             try
             {
-                TcpListener = new TcpListener(IPAddress.Any, port);
+                TcpListener = new TcpListener(IPAddress.Any, klientPort);
                 TcpListener.Start();
             }
             catch (Exception err)
@@ -54,11 +60,16 @@ namespace Pong
             {
                 IPAddress address = IPAddress.Parse(tbxIp.Text);
                 lblUppeVänster.Text = "Försöker ansluta till: " + address.ToString();
-                await klient.ConnectAsync(address, port);
+                klient = new TcpClient();
+                klient.ReceiveTimeout = 100;
+                await klient.ConnectAsync(address, serverPort);
                 if (klient.Connected)
                 {
                     send("redo");
                     MessageBox.Show("Ansluten!");
+                    gbxMenu.Enabled = false;
+                    gbxMenu.Visible = false;
+                    startGame();
                 }
             }
             catch (Exception error)
@@ -99,6 +110,7 @@ namespace Pong
             string message = Encoding.UTF8.GetString(buffer);
             lblUppeVänster.Text = message;
 
+
             StartaLäsning(klient);
         }
 
@@ -108,6 +120,18 @@ namespace Pong
             try
             {
                 await klient.GetStream().WriteAsync(utData, 0, utData.Length);
+                NetworkStream stream = klient.GetStream();
+                //await using NetworkStream stream = klient.GetStream();
+
+                // Väntar svar från server med information om måståndare och boll
+                var buffer = new byte[1_024];
+                int response = await klient.GetStream().ReadAsync(buffer, 0, buffer.Length);
+                string responseText = Encoding.UTF8.GetString(buffer, 0, response);
+                if (responseText.Contains("Left"))
+                {
+                    playerLeft.SetPlayer(responseText);
+                    motståndare.Location = playerLeft.Location;
+                }
             }
             catch (Exception error)
             {
@@ -124,11 +148,16 @@ namespace Pong
         {
             while (klient.Connected)
             {
-                Point point = spelare.Location;
-                send(point.ToString());
-                await Task.Delay(100);
+                playerRight.Location = spelare.Location;
+                send(playerRight.ToString());
+                await Task.Delay(20);
             }
             MessageBox.Show("Not sending");
+        }
+
+        private async void ballLocation()
+        {
+            Point bollPoint = boll.Location;
         }
 
 
@@ -143,23 +172,35 @@ namespace Pong
 
             if (e.KeyCode == Keys.Up)
             {
-                point.Y = point.Y - 20;
+                point.Y = point.Y - 10;
 
-                if(point.Y <= 0) return;
+                if (point.Y <= 0) return;
 
                 spelare.Location = point;
                 await Task.Delay(100);
             }
             if (e.KeyCode == Keys.Down)
             {
-                point.Y = point.Y + 20;
+                point.Y = point.Y + 10;
 
-                if (point.Y + 70 >= formSize.Height) return;
-                
+                if (point.Y + 50 >= formSize.Height) return;
+
 
                 spelare.Location = point;
                 await Task.Delay(100);
             }
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            klient.Close();
+            klient.Dispose();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            playerRight = new Player(spelare.Location, "Right");
+            playerLeft = new Player(motståndare.Location, "Left");
         }
     }
 }

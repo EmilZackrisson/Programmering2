@@ -16,7 +16,7 @@ namespace TCP_Server
     {
         TcpListener lyssnare;
         TcpClient klient;
-        int port = 12345;
+        int port = 34512;
 
         public Form1()
         {
@@ -55,6 +55,9 @@ namespace TCP_Server
             try
             {
                 n = await klient.GetStream().ReadAsync(buffert, 0, buffert.Length);
+
+                byte[] utData = Encoding.UTF8.GetBytes("hejsan från servern");
+                await klient.GetStream().WriteAsync(utData, 0, utData.Length);
             }
             catch (Exception error)
             {
@@ -62,6 +65,12 @@ namespace TCP_Server
             }
             rtbInkorg.AppendText(Encoding.UTF8.GetString(buffert, 0, n));
             StartaLäsning(klient);
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            klient.Close();
+            klient.Dispose();
         }
     }
 }
