@@ -27,6 +27,7 @@ namespace TCP_Server
 
         public void SetPlayer(string playerData)
         {
+            playerData = playerData.Trim(new char[] { '\0' });
             if (playerData.StartsWith("{") && playerData.EndsWith("}"))
             {
                 playerData = playerData.Trim(new Char[] { ' ', '{', '}' });
@@ -34,15 +35,12 @@ namespace TCP_Server
                 Side = data[0];
 
                 // Gets and sets location
-                //string[] coords = data[1].Split(',');
-                //Location = new Point(int.Parse(coords[0]), int.Parse(coords[1]));
-
-                // Gets and sets points
-                Point = int.Parse(data[2]);
+                string[] coords = data[1].Split(',');
+                Location = new Point(int.Parse(coords[0].Replace("X=", "").Replace("{", "")), int.Parse(coords[1].Replace("Y=", "").Replace("}", "")));
             }
             else
             {
-                MessageBox.Show("SetPlayer fick fel indata:\n" + playerData);
+                //MessageBox.Show("SetPlayer fick fel indata:\n" + playerData);
             }
         }
 

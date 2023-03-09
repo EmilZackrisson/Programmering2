@@ -68,10 +68,12 @@ namespace TCP_Server
                 if (text.Contains("Left"))
                 {
                     playerLeft.SetPlayer(text);
+                    pnLeft.Location = playerLeft.Location;
                 }
                 if (text.Contains("Right"))
                 {
                     playerRight.SetPlayer(text);
+                    pnRight.Location = playerRight.Location;
                 }
             }
             catch (Exception error)
@@ -79,7 +81,7 @@ namespace TCP_Server
                 MessageBox.Show(error.ToString());
                 Log(error.ToString());
             }
-            
+
             StartaLäsning(klient);
         }
 

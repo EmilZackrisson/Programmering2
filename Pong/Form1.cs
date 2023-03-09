@@ -131,6 +131,7 @@ namespace Pong
                 string responseText = Encoding.UTF8.GetString(buffer, 0, response);
                 if (responseText.Contains("Left"))
                 {
+                    MessageBox.Show("Fick vänster spelare");
                     playerLeft.SetPlayer(responseText);
                     motståndare.Location = playerLeft.Location;
                 }
@@ -180,7 +181,7 @@ namespace Pong
                 klient.Dispose();
             }
             catch { }
-            
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
