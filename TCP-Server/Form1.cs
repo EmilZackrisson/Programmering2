@@ -160,8 +160,6 @@ namespace TCP_Server
                 playerLeft.AddPoint();
                 lblLeftPoints.Text = playerLeft.Point.ToString();
                 resetPositions();
-
-
             }
 
             //send(ball.ToString());

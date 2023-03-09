@@ -96,6 +96,7 @@ namespace Pong
             StartaLäsning(klient);
         }*/
 
+        /**
         public async void StartaLäsning(TcpClient klient)
         {
             byte[] buffer = new byte[1024];
@@ -115,7 +116,7 @@ namespace Pong
 
             StartaLäsning(klient);
         }
-
+        */
         public async void Send(string message)
         {
             byte[] utData = Encoding.UTF8.GetBytes(message);
@@ -190,6 +191,7 @@ namespace Pong
             playerLeft = new Player(motståndare.Location, "Left");
         }
 
+        /*
         private async void ReadFromServer()
         {
             byte[] buffer = new byte[1024];
@@ -197,6 +199,7 @@ namespace Pong
             string message = Encoding.UTF8.GetString(buffer);
             lblUppeVänster.Text = message;
         }
+        */
 
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -205,7 +208,7 @@ namespace Pong
                 playerRight.Location = spelare.Location;
                 Send(playerRight.ToString());
 
-                ReadFromServer();
+                //ReadFromServer();
             }
             else
             {
