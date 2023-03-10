@@ -22,6 +22,7 @@ namespace Pong
         Player playerLeft;
         Ball Ball;
 
+        bool leftConnected = false;
 
         // int port = 34512;
         int serverPort = 34513;
@@ -36,24 +37,6 @@ namespace Pong
             //startaServer();
             AnslutTillServer();
         }
-        /*
-        private void startaServer()
-        {
-            try
-            {
-                TcpListener = new TcpListener(IPAddress.Any, klientPort);
-                TcpListener.Start();
-            }
-            catch (Exception err)
-            {
-                MessageBox.Show(err.Message);
-                return;
-            }
-
-            gbxMenu.Enabled = false;
-            gbxMenu.Visible = false;
-            StartaMottagning();
-        }*/
 
         private async void AnslutTillServer()
         {
@@ -72,7 +55,7 @@ namespace Pong
                     gbxMenu.Visible = false;
                     lblUppeVänster.Text = "Ansluten till: " + address.ToString();
                     gameRunning = true;
-                    timer1.Start();
+
                 }
             }
             catch (Exception error)
@@ -98,6 +81,8 @@ namespace Pong
                 {
                     playerLeft.SetPlayer(responseText);
                     motståndare.Location = playerLeft.Location;
+                    leftConnected = true;
+                    timer1.Start();
                 }
                 if (responseText.Contains("balldir"))
                 {
@@ -172,19 +157,19 @@ namespace Pong
 
                 if (boll.Bounds.IntersectsWith(pnRight.Bounds))
                 {
-                    Ball.vX = -1;
+                    Ball.vX = -3;
                 }
                 if (boll.Bounds.IntersectsWith(pnLeft.Bounds))
                 {
-                    Ball.vX = 1;
+                    Ball.vX = 3;
                 }
                 if (boll.Bounds.IntersectsWith(pnTop.Bounds)) // Slår i taket
                 {
-                    Ball.vY = 1;
+                    Ball.vY = 3;
                 }
                 if (boll.Bounds.IntersectsWith(pnBottom.Bounds)) // Slår i golvet
                 {
-                    Ball.vY = -1;
+                    Ball.vY = -3;
                 }
 
                 // Kolla om boll utanför

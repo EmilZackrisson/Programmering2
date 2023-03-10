@@ -8,7 +8,7 @@ namespace TCP_Server
 {
     internal class Ball
     {
-        public int[] randomizeDirection()
+        public string randomizeDirection()
         {
             Random random = new Random();
             int ballXDir = random.Next(1, 3);
@@ -43,7 +43,7 @@ namespace TCP_Server
             }
 
 
-            return new int[] { vX, vY };
+            return vX + "|" + vY;
         }
     }
 }

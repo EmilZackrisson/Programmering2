@@ -42,9 +42,9 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.pnTop = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.pnLeft = new System.Windows.Forms.Panel();
             this.pnBottom = new System.Windows.Forms.Panel();
             this.pnRight = new System.Windows.Forms.Panel();
-            this.pnLeft = new System.Windows.Forms.Panel();
             this.lblLeftPoint = new System.Windows.Forms.Label();
             this.lblPointRight = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.boll)).BeginInit();
@@ -173,6 +173,13 @@
             this.panel1.Size = new System.Drawing.Size(200, 100);
             this.panel1.TabIndex = 0;
             // 
+            // pnLeft
+            // 
+            this.pnLeft.Location = new System.Drawing.Point(-5, 7);
+            this.pnLeft.Name = "pnLeft";
+            this.pnLeft.Size = new System.Drawing.Size(10, 463);
+            this.pnLeft.TabIndex = 9;
+            // 
             // pnBottom
             // 
             this.pnBottom.Location = new System.Drawing.Point(-5, 448);
@@ -186,13 +193,6 @@
             this.pnRight.Name = "pnRight";
             this.pnRight.Size = new System.Drawing.Size(10, 458);
             this.pnRight.TabIndex = 8;
-            // 
-            // pnLeft
-            // 
-            this.pnLeft.Location = new System.Drawing.Point(-5, 7);
-            this.pnLeft.Name = "pnLeft";
-            this.pnLeft.Size = new System.Drawing.Size(10, 463);
-            this.pnLeft.TabIndex = 9;
             // 
             // lblLeftPoint
             // 

@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Pong
 {
@@ -19,10 +20,12 @@ namespace Pong
             if (ballDir.StartsWith("{") && ballDir.EndsWith("}"))
             {
                 ballDir = ballDir.Trim(new Char[] { ' ', '{', '}' });
-                string[] data = ballDir.Split('|'); // 0=x, 1=y
+                MessageBox.Show(ballDir);
 
-                vX = int.Parse(data[0]);
-                vY = int.Parse(data[1]);
+                string[] ballDirSplit = ballDir.Split('|'); // 0=x, 1=y
+                MessageBox.Show(ballDirSplit[1] + ", " + ballDirSplit[2]);
+                vX = int.Parse(ballDirSplit[1]);
+                vY = int.Parse(ballDirSplit[2]);
             }
         }
     }

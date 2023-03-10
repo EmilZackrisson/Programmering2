@@ -33,7 +33,7 @@ namespace TCP_Server
         Player playerLeft;
 
         Ball ball;
-        int[] ballDir;
+        string ballDir;
 
         public Form1()
         {
@@ -82,13 +82,11 @@ namespace TCP_Server
                 {
                     byte[] utdata = Encoding.UTF8.GetBytes("{balldir|" + ballDir.ToString() + "}");
                     await klient2.GetStream().WriteAsync(utdata, 0, utdata.Length);
-                    return;
                 }
                 if (text.Contains("vänsterRedo"))
                 {
                     byte[] utdata = Encoding.UTF8.GetBytes("{balldir|" + ballDir.ToString() + "}");
                     await klient1.GetStream().WriteAsync(utdata, 0, utdata.Length);
-                    return;
                 }
 
                 if (text.Contains("Left"))
@@ -115,10 +113,7 @@ namespace TCP_Server
 
                     if (playerRight.Point > checkPlayer.Point)
                     {
-                        // Poäng till playerRight, gör ny boll
-
-
-                        byte[] utdata = Encoding.UTF8.GetBytes("{balldir|" + ball.randomizeDirection().ToString() + "}");
+                        byte[] utdata = Encoding.UTF8.GetBytes("{balldir:" + ball.randomizeDirection().ToString() + "}");
                         await klient2.GetStream().WriteAsync(utdata, 0, utdata.Length);
                     }
                     else
@@ -162,6 +157,7 @@ namespace TCP_Server
 
             ball = new Ball();
             ballDir = ball.randomizeDirection();
+            Log(ballDir);
         }
 
         private void resetPositions()
