@@ -23,7 +23,7 @@ namespace Pong
 
 
         // int port = 34512;
-        int serverPort = 34512;
+        int serverPort = 34513;
         bool gameRunning = false;
         public Form1()
         {
@@ -126,13 +126,12 @@ namespace Pong
                 NetworkStream stream = klient.GetStream();
                 //await using NetworkStream stream = klient.GetStream();
 
-                // Väntar svar från server med information om måståndare och boll
+                // Väntar svar från server med information om måståndare
                 var buffer = new byte[1_024];
                 int response = await klient.GetStream().ReadAsync(buffer, 0, buffer.Length);
                 string responseText = Encoding.UTF8.GetString(buffer, 0, response);
                 if (responseText.Contains("Left"))
                 {
-                    MessageBox.Show("Fick vänster spelare");
                     playerLeft.SetPlayer(responseText);
                     motståndare.Location = playerLeft.Location;
                 }

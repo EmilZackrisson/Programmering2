@@ -14,9 +14,13 @@ namespace TCP_Server
 {
     public partial class Form1 : Form
     {
-        TcpListener lyssnare;
-        TcpClient klient;
-        int port = 34512;
+        TcpListener lyssnare1;
+        TcpListener lyssnare2;
+        TcpClient klient1;
+        TcpClient klient2;
+
+        int port1 = 34512;
+        int port2 = 34513;
 
         int vX = 1;
         int vY = 1;
@@ -35,8 +39,12 @@ namespace TCP_Server
 
         private void btnStartServer_Click(object sender, EventArgs e)
         {
-            lyssnare = new TcpListener(IPAddress.Any, port);
-            lyssnare.Start();
+            lyssnare1 = new TcpListener(IPAddress.Any, port1);
+            lyssnare2 = new TcpListener(IPAddress.Any, port2);
+
+            lyssnare1.Start();
+            lyssnare2.Start();
+
 
             btnStartServer.Enabled = false;
             StartaMottagning();
@@ -46,13 +54,15 @@ namespace TCP_Server
         {
             try
             {
-                klient = await lyssnare.AcceptTcpClientAsync();
+                klient1 = await lyssnare1.AcceptTcpClientAsync();
+                klient2 = await lyssnare2.AcceptTcpClientAsync();
             }
             catch (Exception Error)
             {
                 MessageBox.Show(Error.Message);
             }
-            StartaLäsning(klient);
+            StartaLäsning(klient1);
+            StartaLäsning(klient2);
         }
 
         public async void StartaLäsning(TcpClient klient)
@@ -69,11 +79,15 @@ namespace TCP_Server
                 {
                     playerLeft.SetPlayer(text);
                     pnLeft.Location = playerLeft.Location;
+                    byte[] utdata = Encoding.UTF8.GetBytes(playerRight.ToString());
+                    await klient1.GetStream().WriteAsync(utdata, 0, utdata.Length);
                 }
                 if (text.Contains("Right"))
                 {
                     playerRight.SetPlayer(text);
                     pnRight.Location = playerRight.Location;
+                    byte[] utdata = Encoding.UTF8.GetBytes(playerLeft.ToString());
+                    await klient2.GetStream().WriteAsync(utdata, 0, utdata.Length);
                 }
             }
             catch (Exception error)
@@ -93,8 +107,8 @@ namespace TCP_Server
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            klient.Close();
-            klient.Dispose();
+            klient1.Close();
+            klient1.Dispose();
         }
 
         private void Form1_Load(object sender, EventArgs e)
