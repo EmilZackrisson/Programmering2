@@ -20,6 +20,7 @@ namespace Pong
         TcpClient klient;
         Player playerRight;
         Player playerLeft;
+        Ball Ball;
 
 
         // int port = 34512;
@@ -65,7 +66,7 @@ namespace Pong
                 await klient.ConnectAsync(address, serverPort);
                 if (klient.Connected)
                 {
-                    Send("redo");
+                    Send("högerRedo");
                     MessageBox.Show("Ansluten!");
                     gbxMenu.Enabled = false;
                     gbxMenu.Visible = false;
@@ -80,43 +81,6 @@ namespace Pong
             }
         }
 
-        /*
-        public async void StartaMottagning()
-        {
-            try
-            {
-                klient = await TcpListener.AcceptTcpClientAsync();
-                MessageBox.Show("Motståndare ansluten!");
-
-            }
-            catch (Exception Error)
-            {
-                MessageBox.Show(Error.Message);
-            }
-            StartaLäsning(klient);
-        }*/
-
-        /**
-        public async void StartaLäsning(TcpClient klient)
-        {
-            byte[] buffer = new byte[1024];
-            try
-            {
-                int n = await klient.GetStream().ReadAsync(buffer, 0, buffer.Length);
-                StartaLäsning(klient);
-            }
-            catch (Exception err)
-            {
-                MessageBox.Show(err.Message);
-                return;
-            }
-            string message = Encoding.UTF8.GetString(buffer);
-            lblUppeVänster.Text = message;
-
-
-            StartaLäsning(klient);
-        }
-        */
         public async void Send(string message)
         {
             byte[] utData = Encoding.UTF8.GetBytes(message);
@@ -134,6 +98,10 @@ namespace Pong
                 {
                     playerLeft.SetPlayer(responseText);
                     motståndare.Location = playerLeft.Location;
+                }
+                if (responseText.Contains("balldir"))
+                {
+                    Ball = new Ball(responseText);
                 }
             }
             catch (Exception error)
@@ -190,16 +158,6 @@ namespace Pong
             playerLeft = new Player(motståndare.Location, "Left");
         }
 
-        /*
-        private async void ReadFromServer()
-        {
-            byte[] buffer = new byte[1024];
-            await klient.GetStream().ReadAsync(buffer, 0, buffer.Length);
-            string message = Encoding.UTF8.GetString(buffer);
-            lblUppeVänster.Text = message;
-        }
-        */
-
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (klient.Connected && gameRunning)
@@ -207,12 +165,46 @@ namespace Pong
                 playerRight.Location = spelare.Location;
                 Send(playerRight.ToString());
 
-                //ReadFromServer();
+                Point ball = boll.Location;
+                ball.X += Ball.vX;
+                ball.Y += Ball.vY;
+                boll.Location = ball;
+
+                if (boll.Bounds.IntersectsWith(pnRight.Bounds))
+                {
+                    Ball.vX = -1;
+                }
+                if (boll.Bounds.IntersectsWith(pnLeft.Bounds))
+                {
+                    Ball.vX = 1;
+                }
+                if (boll.Bounds.IntersectsWith(pnTop.Bounds)) // Slår i taket
+                {
+                    Ball.vY = 1;
+                }
+                if (boll.Bounds.IntersectsWith(pnBottom.Bounds)) // Slår i golvet
+                {
+                    Ball.vY = -1;
+                }
+
+                // Kolla om boll utanför
+                if (ball.X < 0)
+                {
+                    playerRight.AddPoint();
+                    lblPointRight.Text = playerRight.Point.ToString();
+                }
+                if (ball.X > 816)
+                {
+                    playerLeft.AddPoint();
+                    lblLeftPoint.Text = playerLeft.Point.ToString();
+                }
             }
             else
             {
                 lblUppeVänster.Text = "Running: " + gameRunning + " Connected: " + klient.Connected;
             }
         }
+
+
     }
 }

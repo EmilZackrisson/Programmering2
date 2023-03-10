@@ -32,6 +32,9 @@ namespace TCP_Server
         Player playerRight;
         Player playerLeft;
 
+        Ball ball;
+        int[] ballDir;
+
         public Form1()
         {
             InitializeComponent();
@@ -75,19 +78,55 @@ namespace TCP_Server
                 string text = Encoding.UTF8.GetString(buffert);
                 Log(text);
 
+                if (text.Contains("högerRedo"))
+                {
+                    byte[] utdata = Encoding.UTF8.GetBytes("{balldir|" + ballDir.ToString() + "}");
+                    await klient2.GetStream().WriteAsync(utdata, 0, utdata.Length);
+                    return;
+                }
+                if (text.Contains("vänsterRedo"))
+                {
+                    byte[] utdata = Encoding.UTF8.GetBytes("{balldir|" + ballDir.ToString() + "}");
+                    await klient1.GetStream().WriteAsync(utdata, 0, utdata.Length);
+                    return;
+                }
+
                 if (text.Contains("Left"))
                 {
+                    Player checkPlayer = playerLeft;
                     playerLeft.SetPlayer(text);
-                    pnLeft.Location = playerLeft.Location;
-                    byte[] utdata = Encoding.UTF8.GetBytes(playerRight.ToString());
-                    await klient1.GetStream().WriteAsync(utdata, 0, utdata.Length);
+
+                    if (playerLeft.Point > checkPlayer.Point)
+                    {
+                        byte[] utdataBoll = Encoding.UTF8.GetBytes("{balldir|" + ball.randomizeDirection().ToString() + "}");
+                        await klient2.GetStream().WriteAsync(utdataBoll, 0, utdataBoll.Length);
+                    }
+                    else
+                    {
+                        pnLeft.Location = playerLeft.Location;
+                        byte[] utdata = Encoding.UTF8.GetBytes(playerRight.ToString());
+                        await klient1.GetStream().WriteAsync(utdata, 0, utdata.Length);
+                    }
                 }
                 if (text.Contains("Right"))
                 {
+                    Player checkPlayer = playerRight;
                     playerRight.SetPlayer(text);
-                    pnRight.Location = playerRight.Location;
-                    byte[] utdata = Encoding.UTF8.GetBytes(playerLeft.ToString());
-                    await klient2.GetStream().WriteAsync(utdata, 0, utdata.Length);
+
+                    if (playerRight.Point > checkPlayer.Point)
+                    {
+                        // Poäng till playerRight, gör ny boll
+
+
+                        byte[] utdata = Encoding.UTF8.GetBytes("{balldir|" + ball.randomizeDirection().ToString() + "}");
+                        await klient2.GetStream().WriteAsync(utdata, 0, utdata.Length);
+                    }
+                    else
+                    {
+                        pnRight.Location = playerRight.Location;
+                        byte[] utdata = Encoding.UTF8.GetBytes(playerLeft.ToString());
+                        await klient2.GetStream().WriteAsync(utdata, 0, utdata.Length);
+                    }
                 }
             }
             catch (Exception error)
@@ -121,6 +160,8 @@ namespace TCP_Server
             playerLeftStart = playerLeft.Location;
             ballStart = pnBall.Location;
 
+            ball = new Ball();
+            ballDir = ball.randomizeDirection();
         }
 
         private void resetPositions()
@@ -175,10 +216,6 @@ namespace TCP_Server
                 lblLeftPoints.Text = playerLeft.Point.ToString();
                 resetPositions();
             }
-
-            //send(ball.ToString());
-            //send(playerLeft.ToString());
-            //send(playerRight.ToString());
         }
     }
 }
