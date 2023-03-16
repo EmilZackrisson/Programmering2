@@ -22,7 +22,7 @@ namespace SQL
         private void btnSök_Click(object sender, EventArgs e)
         {
             string söktext = textBox1.Text;
-            var selected = comboBox1.GetItemText(comboBox1.Text);
+            string selected = comboBox1.GetItemText(comboBox1.Text);
             string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Programmering 2\C#\SQL\Kundregister.mdf;Integrated Security=True";
             string query = $"SELECT * FROM [Personer] WHERE {selected}='{söktext}'";
 
@@ -40,7 +40,6 @@ namespace SQL
                         string förnamn = reader.GetString(1);
                         string efternamn = reader.GetString(2);
                         DateTime född = reader.GetDateTime(3);
-
 
                         lbxResultat.Items.Add($"{personnummer} {förnamn} {efternamn} {född.ToString("yyyy-MM-dd")}");
                     }
