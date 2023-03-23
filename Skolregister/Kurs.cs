@@ -12,22 +12,19 @@ namespace Skolregister
     using System;
     using System.Collections.Generic;
     
-    public partial class Elev
+    public partial class Kurs
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Elev()
+        public Kurs()
         {
-            this.Böcker = new HashSet<Bok>();
-            this.Kurser = new HashSet<Kurs>();
+            this.Elever = new HashSet<Elev>();
         }
     
-        public string PersonNr { get; set; }
-        public string Förnamn { get; set; }
-        public string Efternamn { get; set; }
+        public string Kurskod { get; set; }
+        public string Kursnamn { get; set; }
+        public int Poäng { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Bok> Böcker { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Kurs> Kurser { get; set; }
+        public virtual ICollection<Elev> Elever { get; set; }
     }
 }

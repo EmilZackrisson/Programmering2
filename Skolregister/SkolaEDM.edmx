@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SkolregisterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Böcker">
+          <Key>
+            <PropertyRef Name="BokNr" />
+          </Key>
+          <Property Name="BokNr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Titel" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Ämne" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PersonNr" Type="nchar" MaxLength="10" />
+          <Property Name="Lånedatum" Type="date" />
+        </EntityType>
+        <EntityType Name="Elever">
+          <Key>
+            <PropertyRef Name="PersonNr" />
+          </Key>
+          <Property Name="PersonNr" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Förnamn" Type="nvarchar" MaxLength="50" />
+          <Property Name="Efternamn" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Kurser">
+          <Key>
+            <PropertyRef Name="Kurskod" />
+          </Key>
+          <Property Name="Kurskod" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Kursnamn" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Poäng" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Läser">
+          <Key>
+            <PropertyRef Name="PersonNr" />
+            <PropertyRef Name="Kurskod" />
+          </Key>
+          <Property Name="PersonNr" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Kurskod" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Böcker_Elever">
+          <End Role="Elever" Type="Self.Elever" Multiplicity="0..1" />
+          <End Role="Böcker" Type="Self.Böcker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Elever">
+              <PropertyRef Name="PersonNr" />
+            </Principal>
+            <Dependent Role="Böcker">
+              <PropertyRef Name="PersonNr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Läser_Elever">
+          <End Role="Elever" Type="Self.Elever" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Läser" Type="Self.Läser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Elever">
+              <PropertyRef Name="PersonNr" />
+            </Principal>
+            <Dependent Role="Läser">
+              <PropertyRef Name="PersonNr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Läser_Kurser">
+          <End Role="Kurser" Type="Self.Kurser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Läser" Type="Self.Läser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kurser">
+              <PropertyRef Name="Kurskod" />
+            </Principal>
+            <Dependent Role="Läser">
+              <PropertyRef Name="Kurskod" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SkolregisterModelStoreContainer">
+          <EntitySet Name="Böcker" EntityType="Self.Böcker" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Elever" EntityType="Self.Elever" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kurser" EntityType="Self.Kurser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Läser" EntityType="Self.Läser" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Böcker_Elever" Association="Self.FK_Böcker_Elever">
+            <End Role="Elever" EntitySet="Elever" />
+            <End Role="Böcker" EntitySet="Böcker" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Läser_Elever" Association="Self.FK_Läser_Elever">
+            <End Role="Elever" EntitySet="Elever" />
+            <End Role="Läser" EntitySet="Läser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Läser_Kurser" Association="Self.FK_Läser_Kurser">
+            <End Role="Kurser" EntitySet="Kurser" />
+            <End Role="Läser" EntitySet="Läser" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SkolregisterModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Bok">
+          <Key>
+            <PropertyRef Name="BokNr" />
+          </Key>
+          <Property Name="BokNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Titel" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Ämne" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PersonNr" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Lånedatum" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Elev" Relationship="Self.FK_Böcker_Elever" FromRole="Böcker" ToRole="Elever" />
+        </EntityType>
+        <EntityType Name="Elev">
+          <Key>
+            <PropertyRef Name="PersonNr" />
+          </Key>
+          <Property Name="PersonNr" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Förnamn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Efternamn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Böcker" Relationship="Self.FK_Böcker_Elever" FromRole="Elever" ToRole="Böcker" />
+          <NavigationProperty Name="Kurser" Relationship="Self.Läser" FromRole="Elever" ToRole="Kurser" />
+        </EntityType>
+        <EntityType Name="Kurs">
+          <Key>
+            <PropertyRef Name="Kurskod" />
+          </Key>
+          <Property Name="Kurskod" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Kursnamn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Poäng" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Elever" Relationship="Self.Läser" FromRole="Kurser" ToRole="Elever" />
+        </EntityType>
+        <Association Name="FK_Böcker_Elever">
+          <End Role="Elever" Type="SkolregisterModel.Elev" Multiplicity="0..1" />
+          <End Role="Böcker" Type="SkolregisterModel.Bok" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Elever">
+              <PropertyRef Name="PersonNr" />
+            </Principal>
+            <Dependent Role="Böcker">
+              <PropertyRef Name="PersonNr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Läser">
+          <End Role="Elever" Type="SkolregisterModel.Elev" Multiplicity="*" />
+          <End Role="Kurser" Type="SkolregisterModel.Kurs" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="SkolregisterEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Böcker" EntityType="SkolregisterModel.Bok" />
+          <EntitySet Name="Elever" EntityType="SkolregisterModel.Elev" />
+          <EntitySet Name="Kurser" EntityType="SkolregisterModel.Kurs" />
+          <AssociationSet Name="FK_Böcker_Elever" Association="Self.FK_Böcker_Elever">
+            <End Role="Elever" EntitySet="Elever" />
+            <End Role="Böcker" EntitySet="Böcker" />
+          </AssociationSet>
+          <AssociationSet Name="Läser" Association="Self.Läser">
+            <End Role="Elever" EntitySet="Elever" />
+            <End Role="Kurser" EntitySet="Kurser" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SkolregisterModelStoreContainer" CdmEntityContainer="SkolregisterEntities">
+          <EntitySetMapping Name="Böcker">
+            <EntityTypeMapping TypeName="SkolregisterModel.Bok">
+              <MappingFragment StoreEntitySet="Böcker">
+                <ScalarProperty Name="BokNr" ColumnName="BokNr" />
+                <ScalarProperty Name="Titel" ColumnName="Titel" />
+                <ScalarProperty Name="Ämne" ColumnName="Ämne" />
+                <ScalarProperty Name="PersonNr" ColumnName="PersonNr" />
+                <ScalarProperty Name="Lånedatum" ColumnName="Lånedatum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Elever">
+            <EntityTypeMapping TypeName="SkolregisterModel.Elev">
+              <MappingFragment StoreEntitySet="Elever">
+                <ScalarProperty Name="PersonNr" ColumnName="PersonNr" />
+                <ScalarProperty Name="Förnamn" ColumnName="Förnamn" />
+                <ScalarProperty Name="Efternamn" ColumnName="Efternamn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kurser">
+            <EntityTypeMapping TypeName="SkolregisterModel.Kurs">
+              <MappingFragment StoreEntitySet="Kurser">
+                <ScalarProperty Name="Kurskod" ColumnName="Kurskod" />
+                <ScalarProperty Name="Kursnamn" ColumnName="Kursnamn" />
+                <ScalarProperty Name="Poäng" ColumnName="Poäng" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Läser" TypeName="SkolregisterModel.Läser" StoreEntitySet="Läser">
+            <EndProperty Name="Elever">
+              <ScalarProperty Name="PersonNr" ColumnName="PersonNr" />
+            </EndProperty>
+            <EndProperty Name="Kurser">
+              <ScalarProperty Name="Kurskod" ColumnName="Kurskod" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

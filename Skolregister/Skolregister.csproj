@@ -12,6 +12,7 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -24,7 +25,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -70,16 +70,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Böcker.cs">
+    <Compile Include="Bok.cs">
       <DependentUpon>SkolaEDM.tt</DependentUpon>
     </Compile>
-    <Compile Include="dbDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>dbDataSet.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Elev.cs" />
-    <Compile Include="Elever.cs">
+    <Compile Include="Elev.cs">
       <DependentUpon>SkolaEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Form1.cs">
@@ -88,7 +82,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Kurser.cs">
+    <Compile Include="Kurs.cs">
       <DependentUpon>SkolaEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -120,17 +114,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="dbDataSet.xsc">
-      <DependentUpon>dbDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="dbDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>dbDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="dbDataSet.xss">
-      <DependentUpon>dbDataSet.xsd</DependentUpon>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -153,22 +136,22 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="db.mdf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="db_log.ldf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <DependentUpon>db.mdf</DependentUpon>
-    </Content>
     <Content Include="SkolaEDM.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>SkolaEDM.Context.cs</LastGenOutput>
       <DependentUpon>SkolaEDM.edmx</DependentUpon>
+      <LastGenOutput>SkolaEDM.Context.cs</LastGenOutput>
     </Content>
     <Content Include="SkolaEDM.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>SkolaEDM.edmx</DependentUpon>
       <LastGenOutput>SkolaEDM.cs</LastGenOutput>
+    </Content>
+    <Content Include="Skolregister.mdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Skolregister_log.ldf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <DependentUpon>Skolregister.mdf</DependentUpon>
     </Content>
   </ItemGroup>
   <ItemGroup>

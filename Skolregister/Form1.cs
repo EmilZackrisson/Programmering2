@@ -15,103 +15,281 @@ namespace Skolregister
 {
     public partial class Form1 : Form
     {
-        string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Programmering 2\C#\Skolregister\db.mdf;Integrated Security=True;Connect Timeout=30";
+        private const int ELEVER = 0, BÖCKER = 1, KURSER = 2, LEDIGA_BÖCKER = 3, LÅNADE_BÖCKER = 4, KURSGRUPP = 5;
+
+        private void cbxFilter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UppdateraDataVy();
+
+
+        }
+
+        private void btnNyttLån_Click(object sender, EventArgs e)
+        {
+            int bokNr;
+            if( ! int.TryParse(tbxBokNrLån.Text, out bokNr))
+            {
+                MessageBox.Show("Ogiltigt format på boknummer.");
+                return;
+            }
+
+            DateTime datum;
+            if (! DateTime.TryParse(tbxLåneDatum.Text, out datum))
+            {
+                MessageBox.Show("Ogiltigt datumformat");
+                return;
+            }
+
+            using (var db = new SkolregisterEntities())
+            {
+                // Leta upp eleven
+                var elevUrval = from elev in db.Elever where elev.PersonNr == tbxPersonNrLån.Text select elev;
+
+                // Leta upp boken
+                var bokUrval = from bok in db.Böcker where bok.BokNr == bokNr select bok;
+
+                if(elevUrval.Count() == 1 && bokUrval.Count() == 1)
+                {
+                    try
+                    {
+                        bokUrval.First().Elev = elevUrval.First();
+                        bokUrval.First().Lånedatum = datum;
+                        db.SaveChanges();
+                    }
+                    catch (Exception error)
+                    {
+                        MessageBox.Show(error.Message);
+                    }
+                    finally
+                    {
+                        tbxPersonNrLån.Clear();
+                        tbxBokNrLån.Clear();
+                        tbxLåneDatum.Clear();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Eleven eller boken finns inte");
+                }
+            }
+        }
+
         public Form1()
         {
             InitializeComponent();
         }
 
+        private void btnUppdatera_Click(object sender, EventArgs e)
+        {
+            UppdateraDataVy();
+        }
+
         private void btnRegElev_Click(object sender, EventArgs e)
         {
-            Elev nyElev = new Elev(tbxPersonnummer.Text, tbxElevFörnamn.Text, tbxElevEfternamn.Text);
-            string query = "INSERT INTO [Elever] (PersonNr, Förnamn, Efternamn) VALUES (@personNr, @förnamn, @efternamn);";
+            Elev nyElev = new Elev();
+            nyElev.PersonNr = tbxPersonnummer.Text.Trim();
+            nyElev.Förnamn = tbxElevFörnamn.Text.Trim();
+            nyElev.Efternamn = tbxElevEfternamn.Text.Trim();
 
-            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            using (var db = new SkolregisterEntities())
             {
-                sqlConnection.Open();
-
-                using (SqlConnection cnn = new SqlConnection(connectionString))
+                try
                 {
-                    try
-                    {
-                        cnn.Open();
+                    db.Elever.Add(nyElev);
+                    db.SaveChanges();
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show(error.Message);
+                }
+            }
+        }
 
-                        using (SqlCommand cmd = new SqlCommand(query, cnn))
-                        {
+        private void btnRegBok_Click(object sender, EventArgs e)
+        {
+            Bok nyBok = new Bok();
+            nyBok.Titel = tbxRegBokTitel.Text.Trim();
+            nyBok.Ämne = tbxRegBokÄmne.Text.Trim();
 
-                            cmd.Parameters.AddWithValue("@personNr", nyElev.PersonNr);
-                            cmd.Parameters.AddWithValue("@förnamn", nyElev.Förnamn);
-                            cmd.Parameters.AddWithValue("@efternamn", nyElev.Efternamn);
+            using (var db = new SkolregisterEntities())
+            {
+                try
+                {
+                    db.Böcker.Add(nyBok);
+                    db.SaveChanges();
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show(error.Message);
+                }
+                finally
+                {
+                    tbxRegBokTitel.Clear();
+                    tbxRegBokÄmne.Clear();
+                }
+            }
+        }
 
-                            int rowsAffected = cmd.ExecuteNonQuery();
+        private void btnRegKurs_Click(object sender, EventArgs e)
+        {
+            Kurs kurs = new Kurs();
+            kurs.Kurskod = tbxRegKurskod.Text.Trim();
+            kurs.Kursnamn = tbxRegKursnamn.Text.Trim();
+            kurs.Poäng = int.Parse(tbxRegPoäng.Text.Trim());
 
-                            if (rowsAffected > 0)
-                            {
-                                MessageBox.Show($"{rowsAffected} rader ändrade.");
-                            }
-                            else
-                            {
-                                MessageBox.Show("Inget ändrat");
-                            }
-
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        // We should log the error somewhere, 
-                        // for this example let's just show a message
-                        MessageBox.Show("ERROR:" + ex.Message);
-                    }
+            using ( var db =  new SkolregisterEntities())
+            {
+                try
+                {
+                    db.Kurser.Add(kurs);
+                    db.SaveChanges();
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show($"Error: {error.Message}");
+                }
+                finally
+                {
+                    tbxRegKurskod.Clear();
+                    tbxRegKursnamn.Clear();
+                    tbxRegPoäng.Clear();
                 }
             }
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            UpdateGridView();
         }
 
-        private void UpdateGridView()
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string söktext = tbxFilter.Text;
-            string selected = cbxFilter.GetItemText(cbxFilter.Text);
-            string query = $"SELECT * FROM [Personer]";
-
-            switch (selected)
+            string valdFlik = tabControl1.SelectedTab.Text;
+            if (valdFlik == "Kursval")
             {
-                case "Visa alla elever":
-                    query = "SELECT * FROM [Elever]";
-                    break;
-                case "Visa alla böcker":
-                    query = "SELECT * FROM [Böcker]";
-                    break;
-                case "Visa alla kurser":
-                    query = "SELECT * FROM [Kurser]";
-                    break;
-                case "Visa lediga böcker":
-                    query = "SELECT * FROM [Böcker] WHERE ";
-                    break;
-                default:
-                    break;
-            }
-
-            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
-            {
-                sqlConnection.Open();
-                using (SqlCommand cmd = new SqlCommand(query, sqlConnection))
+                // Lägg in alla kurser i combobox
+                using (var db = new SkolregisterEntities())
                 {
-                    SqlDataReader reader = cmd.ExecuteReader();
-
-                    while (reader.Read())
+                    var urval = from kurs in db.Kurser select kurs;
+                    foreach (var kurs in urval)
                     {
-                        string personnummer = reader.GetString(0);
-                        string förnamn = reader.GetString(1);
-                        string efternamn = reader.GetString(2);
-                        DateTime född = reader.GetDateTime(3);
+                        cbxKurskod.Items.Add(kurs.Kurskod);
                     }
-                    reader.Close();
                 }
             }
         }
+
+        private void btnKursvalReg_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void VisaElever()
+        {
+            dataVy.Columns[0].HeaderText = "PersonNr";
+            dataVy.Columns[1].HeaderText = "Förnamn";
+            dataVy.Columns[2].HeaderText = "Efternamn";
+            dataVy.Rows.Clear();
+
+            using (var db = new SkolregisterEntities())
+            {
+                var urval = from elev in db.Elever select elev;
+                foreach (var elev in urval)
+                {
+                    dataVy.Rows.Add(elev.PersonNr, elev.Förnamn, elev.Efternamn);
+                }
+            }
+        }
+
+        private void VisaBöcker()
+        {
+            dataVy.Columns[0].HeaderText = "Boknummer";
+            dataVy.Columns[1].HeaderText = "Titel";
+            dataVy.Columns[2].HeaderText = "Ämne";
+
+            dataVy.Rows.Clear();
+
+            using ( var db = new SkolregisterEntities())
+            {
+                var urval = from bok in db.Böcker select bok;
+                foreach (var bok in urval)
+                {
+                    dataVy.Rows.Add(bok.BokNr, bok.Titel, bok.Ämne);
+                }
+            }
+        }
+
+        private void VisaKurser()
+        {
+            dataVy.Columns[0].HeaderText = "Kurskod";
+            dataVy.Columns[1].HeaderText = "Kursnamn";
+            dataVy.Columns[2].HeaderText = "Poäng";
+            dataVy.Rows.Clear();
+
+            using (var db = new SkolregisterEntities())
+            {
+                var urval = from kurs in db.Kurser select kurs;
+                foreach (var kurs in urval)
+                {
+                    dataVy.Rows.Add(kurs.Kurskod, kurs.Kursnamn, kurs.Poäng);
+                }
+            }
+        }
+
+        private void VisaKursGrupp(string kurskod)
+        {
+            dataVy.Columns[0].HeaderText = "PersonNr";
+            dataVy.Columns[1].HeaderText = "Förnamn";
+            dataVy.Columns[2].HeaderText = "Efternamn";
+            dataVy.Rows.Clear();
+
+            using ( var db = new SkolregisterEntities())
+            {
+                var urval = from kurs in db.Kurser where kurs.Kursnamn == kurskod from elev in kurs.Elever select elev;
+
+                if (urval.Count() == 0) MessageBox.Show("Kursen har inga elever");
+                else
+                {
+                    foreach (var elev in urval)
+                    {
+                        dataVy.Rows.Add(elev.PersonNr, elev.Förnamn, elev.Efternamn);
+                    }
+                }
+            }
+        }
+
+        private void UppdateraDataVy()
+        {
+            string valt = cbxFilter.Text;
+
+            switch (valt)
+            {
+                case "Visa alla elever":
+                    VisaElever();
+                    break;
+                case "Visa kursgrupp":
+                    if (tbxFilter.Text.Length > 0)
+                    {
+                        VisaKursGrupp(tbxFilter.Text);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Du måste fylla i kurskoden.");
+                        tbxFilter.Select();
+                    }
+                    break;
+                case "Visa alla böcker":
+                    VisaBöcker();
+                    break;
+                case "Visa alla kurser":
+                    VisaKurser();
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        
+
     }
 }
