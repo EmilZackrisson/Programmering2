@@ -180,7 +180,40 @@ namespace Skolregister
 
         private void btnKursvalReg_Click(object sender, EventArgs e)
         {
+            string kurskod = cbxKurskod.Text.Trim();
+            string personNr = tbxKursPersonNr.Text.Trim();
 
+            using (var db = new SkolregisterEntities())
+            {
+                // Leta upp eleven
+                var elevUrval = from elev in db.Elever where elev.PersonNr == personNr select elev;
+
+                // Leta upp kursen
+                var kursUrval = from kurs in db.Kurser where kurs.Kurskod == kurskod select kurs;
+
+                if (elevUrval.Count() == 1 && kursUrval.Count() == 1)
+                {
+                    try
+                    {
+                        
+                        db.SaveChanges();
+                    }
+                    catch (Exception error)
+                    {
+                        MessageBox.Show(error.Message);
+                    }
+                    finally
+                    {
+                        tbxPersonNrLån.Clear();
+                        tbxBokNrLån.Clear();
+                        tbxLåneDatum.Clear();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Eleven eller boken finns inte");
+                }
+            }
         }
 
         private void VisaElever()
