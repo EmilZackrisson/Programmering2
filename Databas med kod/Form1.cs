@@ -47,5 +47,54 @@ namespace Databas_med_kod
             db.Table.Add(person);
             db.SaveChanges();
         }
+
+        private void dataGridView1_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            string personNrToDelete = e.Row.Cells[0].Value.ToString();
+
+            var db = new DBEntities();
+            var removedPerson = from person in db.Table
+                                where person.PersonNr == personNrToDelete
+                                select person;
+            db.Table.Remove(removedPerson.First());
+            var changedRows = db.SaveChanges();
+            if (changedRows > 0)
+            {
+                MessageBox.Show(changedRows + " rader ändrades.");
+            }
+
+        }
+
+        private void btnBokReg_Click(object sender, EventArgs e)
+        {
+            var db = new DBEntities();
+            var bok = new Bok();
+            bok.Titel = tbxBokTitel.Text;
+            bok.Ämne = tbxBokÄmne.Text;
+            bok.Författare = tbxBokFörfattare.Text;
+
+            db.Böcker.Add(bok);
+            int rowsChanged = db.SaveChanges();
+            if (rowsChanged > 0)
+            {
+                MessageBox.Show(rowsChanged + " rader ändrades");
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var db = new DBEntities();
+            var boklån = new Boklån();
+            boklån.PersonNr = tbxBoklånBokNr.Text;
+            boklån.BokNr = int.Parse(tbxBoklånBokNr.Text);
+            boklån.Datum = dateTimePicker1.Value;
+
+            db.Boklån.Add(boklån);
+            int rowsChanged = db.SaveChanges();
+            if (rowsChanged > 0)
+            {
+                MessageBox.Show(rowsChanged + " rader ändrades");
+            }
+        }
     }
 }

@@ -4,7 +4,25 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Boklån">
+          <Key>
+            <PropertyRef Name="PersonNr" />
+            <PropertyRef Name="BokNr" />
+          </Key>
+          <Property Name="PersonNr" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="BokNr" Type="int" Nullable="false" />
+          <Property Name="Datum" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Böcker">
+          <Key>
+            <PropertyRef Name="BokNr" />
+          </Key>
+          <Property Name="BokNr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Titel" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Ämne" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Författare" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Table">
           <Key>
             <PropertyRef Name="PersonNr" />
@@ -13,11 +31,44 @@
           <Property Name="Förnamn" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Efternamn" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Boklån_To_Bok">
+          <End Role="Böcker" Type="Self.Böcker" Multiplicity="1" />
+          <End Role="Boklån" Type="Self.Boklån" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Böcker">
+              <PropertyRef Name="BokNr" />
+            </Principal>
+            <Dependent Role="Boklån">
+              <PropertyRef Name="BokNr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Boklån_To_Elev">
+          <End Role="Table" Type="Self.Table" Multiplicity="1" />
+          <End Role="Boklån" Type="Self.Boklån" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table">
+              <PropertyRef Name="PersonNr" />
+            </Principal>
+            <Dependent Role="Boklån">
+              <PropertyRef Name="PersonNr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="DBModelStoreContainer">
+          <EntitySet Name="Boklån" EntityType="Self.Boklån" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Böcker" EntityType="Self.Böcker" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Table" EntityType="Self.Table" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Boklån_To_Bok" Association="Self.FK_Boklån_To_Bok">
+            <End Role="Böcker" EntitySet="Böcker" />
+            <End Role="Boklån" EntitySet="Boklån" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Boklån_To_Elev" Association="Self.FK_Boklån_To_Elev">
+            <End Role="Table" EntitySet="Table" />
+            <End Role="Boklån" EntitySet="Boklån" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -28,28 +79,102 @@
           <Property Name="PersonNr" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="Förnamn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Efternamn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Boklån" Relationship="DBModel.FK_Boklån_To_Elev" FromRole="Person" ToRole="Boklån" />
         </EntityType>
         <EntityContainer Name="DBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Table" EntityType="DBModel.Person" />
+          <EntitySet Name="Böcker" EntityType="DBModel.Bok" />
+          <EntitySet Name="Boklån" EntityType="DBModel.Boklån" />
+          <AssociationSet Name="FK_Boklån_To_Bok" Association="DBModel.FK_Boklån_To_Bok">
+            <End Role="Bok" EntitySet="Böcker" />
+            <End Role="Boklån" EntitySet="Boklån" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Boklån_To_Elev" Association="DBModel.FK_Boklån_To_Elev">
+            <End Role="Person" EntitySet="Table" />
+            <End Role="Boklån" EntitySet="Boklån" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Bok">
+          <Key>
+            <PropertyRef Name="BokNr" />
+          </Key>
+          <Property Name="BokNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Titel" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Ämne" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Författare" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Boklån" Relationship="DBModel.FK_Boklån_To_Bok" FromRole="Bok" ToRole="Boklån" />
+        </EntityType>
+        <EntityType Name="Boklån">
+          <Key>
+            <PropertyRef Name="PersonNr" />
+            <PropertyRef Name="BokNr" />
+          </Key>
+          <Property Name="PersonNr" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="BokNr" Type="Int32" Nullable="false" />
+          <Property Name="Datum" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Böcker" Relationship="DBModel.FK_Boklån_To_Bok" FromRole="Boklån" ToRole="Bok" />
+          <NavigationProperty Name="Table" Relationship="DBModel.FK_Boklån_To_Elev" FromRole="Boklån" ToRole="Person" />
+        </EntityType>
+        <Association Name="FK_Boklån_To_Bok">
+          <End Type="DBModel.Bok" Role="Bok" Multiplicity="1" />
+          <End Type="DBModel.Boklån" Role="Boklån" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bok">
+              <PropertyRef Name="BokNr" />
+            </Principal>
+            <Dependent Role="Boklån">
+              <PropertyRef Name="BokNr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Boklån_To_Elev">
+          <End Type="DBModel.Person" Role="Person" Multiplicity="1" />
+          <End Type="DBModel.Boklån" Role="Boklån" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="PersonNr" />
+            </Principal>
+            <Dependent Role="Boklån">
+              <PropertyRef Name="PersonNr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="DBModelStoreContainer" CdmEntityContainer="DBEntities">
-          <EntitySetMapping Name="Table">
-            <EntityTypeMapping TypeName="DBModel.Person">
-              <MappingFragment StoreEntitySet="Table">
-                <ScalarProperty Name="PersonNr" ColumnName="PersonNr" />
-                <ScalarProperty Name="Förnamn" ColumnName="Förnamn" />
-                <ScalarProperty Name="Efternamn" ColumnName="Efternamn" />
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DBModelStoreContainer" CdmEntityContainer="DBEntities">
+    <EntitySetMapping Name="Table">
+      <EntityTypeMapping TypeName="IsTypeOf(DBModel.Person)">
+        <MappingFragment StoreEntitySet="Table">
+          <ScalarProperty Name="PersonNr" ColumnName="PersonNr" />
+          <ScalarProperty Name="Förnamn" ColumnName="Förnamn" />
+          <ScalarProperty Name="Efternamn" ColumnName="Efternamn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+          <EntitySetMapping Name="Böcker">
+            <EntityTypeMapping TypeName="DBModel.Bok">
+              <MappingFragment StoreEntitySet="Böcker">
+                <ScalarProperty Name="Författare" ColumnName="Författare" />
+                <ScalarProperty Name="Ämne" ColumnName="Ämne" />
+                <ScalarProperty Name="Titel" ColumnName="Titel" />
+                <ScalarProperty Name="BokNr" ColumnName="BokNr" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
+          <EntitySetMapping Name="Boklån">
+            <EntityTypeMapping TypeName="DBModel.Boklån">
+              <MappingFragment StoreEntitySet="Boklån">
+                <ScalarProperty Name="Datum" ColumnName="Datum" />
+                <ScalarProperty Name="BokNr" ColumnName="BokNr" />
+                <ScalarProperty Name="PersonNr" ColumnName="PersonNr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
@@ -63,7 +188,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>

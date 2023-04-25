@@ -12,19 +12,13 @@ namespace Databas_med_kod
     using System;
     using System.Collections.Generic;
     
-    public partial class Person
+    public partial class Boklån
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Person()
-        {
-            this.Boklån = new HashSet<Boklån>();
-        }
-    
         public string PersonNr { get; set; }
-        public string Förnamn { get; set; }
-        public string Efternamn { get; set; }
+        public int BokNr { get; set; }
+        public System.DateTime Datum { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Boklån> Boklån { get; set; }
+        public virtual Bok Böcker { get; set; }
+        public virtual Person Table { get; set; }
     }
 }

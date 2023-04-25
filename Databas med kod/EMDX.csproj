@@ -58,6 +58,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bok.cs">
+      <DependentUpon>DB-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Boklån.cs">
+      <DependentUpon>DB-Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="DB-Model.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -126,6 +132,7 @@
       <DependentUpon>DB-Model.edmx</DependentUpon>
       <LastGenOutput>DB-Model.Context.cs</LastGenOutput>
     </Content>
+    <Content Include="DB-Model.edmx.sql" />
     <Content Include="DB-Model.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DB-Model.edmx</DependentUpon>

@@ -12,19 +12,21 @@ namespace Databas_med_kod
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-
+    
     public partial class DBEntities : DbContext
     {
         public DBEntities()
             : base("name=DBEntities")
         {
         }
-
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
-
+    
         public virtual DbSet<Person> Table { get; set; }
+        public virtual DbSet<Bok> Böcker { get; set; }
+        public virtual DbSet<Boklån> Boklån { get; set; }
     }
 }
