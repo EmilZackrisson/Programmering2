@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Chatt_Server
+namespace Chat_Sevrer
 {
     internal static class Program
     {

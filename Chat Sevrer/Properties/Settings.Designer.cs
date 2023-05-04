@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Chatt_Server.Properties
+namespace Chat_Sevrer.Properties
 {
 
 

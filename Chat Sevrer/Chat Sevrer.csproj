@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{48559BC8-0873-4B2E-A874-D1C9CE950864}</ProjectGuid>
+    <ProjectGuid>{53A7F466-AF23-44B5-9C86-E42E96162DA9}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Chatt_Server</RootNamespace>
-    <AssemblyName>Chatt Server</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <RootNamespace>Chat_Sevrer</RootNamespace>
+    <AssemblyName>Chat Sevrer</AssemblyName>
+    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
