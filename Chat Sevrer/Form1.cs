@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -14,8 +15,8 @@ namespace Chat_Sevrer
 {
     public partial class Form1 : Form
     {
-        static List<TcpClient> clients = new List<TcpClient>();
-        static TcpListener server = new TcpListener(IPAddress.Any, 8080);
+        List<TcpClient> clientsList = new List<TcpClient>();
+        TcpListener listener = new TcpListener(IPAddress.Any, 5000);
 
         public Form1()
         {
@@ -24,57 +25,61 @@ namespace Chat_Sevrer
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Main();
+            Thread startServer = new Thread(StartServer);
+            startServer.Start();
+            listBox1.Items.Add("Server started");
         }
 
-        private async Task Main()
+        private async void StartServer()
         {
-            server.Start();
-            listBox1.Items.Add("Server started...");
+            listener.Start();
 
             while (true)
             {
-                TcpClient client = await server.AcceptTcpClientAsync();
-                clients.Add(client);
-                listBox1.Items.Add("Client connected!");
 
+                TcpClient newClient = await listener.AcceptTcpClientAsync();
+                clientsList.Add(newClient);
+                listBox1.BeginInvoke(new Action(() =>
+                {
+                    while (newClient.Connected)
+                    {
 
-                Task.Run(() => HandleClient(client));
+                        listBox1.Items.Add("Waiting for new client...");
+
+                    }
+
+                }));
+                Thread handleThread = new Thread(() => HandleClient(newClient));
+                handleThread.Start();
             }
         }
 
-        private async Task HandleClient(TcpClient client)
+        private void HandleClient(TcpClient client)
         {
             NetworkStream stream = client.GetStream();
-
             byte[] buffer = new byte[1024];
-            int bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
-            string username = Encoding.ASCII.GetString(buffer, 0, bytesRead);
-
-            while (true)
+            int byte_count;
+            while ((byte_count = stream.Read(buffer, 0, buffer.Length)) > 0)
             {
-                bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
-                string message = Encoding.ASCII.GetString(buffer, 0, bytesRead);
-                listBox1.Items.Add(username + ": " + message);
+                string data = Encoding.ASCII.GetString(buffer, 0, byte_count);
+                Broadcast(data);
+            }
+        }
 
+        private void Broadcast(string data)
+        {
+            listBox1.Items.Add(data);
+            foreach (TcpClient client in clientsList)
+            {
+                NetworkStream stream = client.GetStream();
+                byte[] buffer = Encoding.ASCII.GetBytes(data + Environment.NewLine);
+                stream.Write(buffer, 0, buffer.Length);
 
-                if (message == "exit")
-                    break;
-
-                foreach (TcpClient c in clients)
+                if (client.Connected == false)
                 {
-                    if (c != client)
-                    {
-                        buffer = Encoding.ASCII.GetBytes(username + ": " + message);
-                        await c.GetStream().WriteAsync(buffer, 0, buffer.Length);
-                    }
+                    clientsList.Remove(client);
                 }
             }
-
-            clients.Remove(client);
-            client.Close();
-            listBox1.Items.Add("Client disconnected.");
-
         }
     }
 }
