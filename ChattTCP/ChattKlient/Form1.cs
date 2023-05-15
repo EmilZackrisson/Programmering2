@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -26,16 +27,16 @@ namespace ChattKlient
         {
             btnDisconnect.Enabled = false;
             btnSend.Enabled = false;
-            btnConnect.Enabled = false;
+            btnConnect.Enabled = true;
         }
 
         private void btnSend_Click(object sender, EventArgs e)
         {
             StartaSändning("[" + tbxUsername.Text + "] " + tbxMessage.Text);
             byte[] buffer = new byte[1024];
-            int message = stream.Read(buffer, 0, buffer.Length);
-            string inData = Encoding.UTF8.GetString(buffer, 0, message);
-            listBox1.Items.Add(inData);
+            //int message = stream.Read(buffer, 0, buffer.Length);
+            //string inData = Encoding.UTF8.GetString(buffer, 0, message);
+            //listBox1.Items.Add(inData);
         }
 
         private void btnDisconnect_Click(object sender, EventArgs e)
@@ -67,11 +68,12 @@ namespace ChattKlient
                 IPAddress adress = IPAddress.Parse(tbxIp.Text);
                 await client.ConnectAsync(adress, port);
             }
-            catch (Exception e)
+            catch
             {
-                Console.WriteLine(e);
             }
             stream = client.GetStream();
+            Thread readStream = new Thread(() => ReadStream(stream));
+            readStream.Start();
         }
 
         public async void StartaSändning(string message)
@@ -85,6 +87,30 @@ namespace ChattKlient
             {
                 Console.WriteLine(e);
             }
+        }
+
+        public async void ReadStream(NetworkStream stream)
+        {
+            try
+            {
+                while (true)
+                {
+                    byte[] bytes = new byte[1024];
+                    await stream.ReadAsync(bytes, 0, bytes.Length);
+
+                    string text = Encoding.UTF8.GetString(bytes);
+
+                    Invoke(new Action(() =>
+                    {
+                        listBox1.Items.Add(text.Trim());
+                    }));
+                }
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+            
         }
 
         private void btnApplyUsername_Click(object sender, EventArgs e)

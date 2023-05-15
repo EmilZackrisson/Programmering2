@@ -16,8 +16,7 @@ namespace ChattServer
     public partial class Form1 : Form
     {
         TcpListener listener;
-        TcpClient client;
-        NetworkStream stream;
+        List<TcpClient> clients = new List<TcpClient>();
         public Form1()
         {
             InitializeComponent();
@@ -35,29 +34,54 @@ namespace ChattServer
         {
             try
             {
-                client = await listener.AcceptTcpClientAsync();
-                stream = client.GetStream();
-                Thread thread = new Thread(() => StartaLäsning(client));
-                thread.Start();
+                while (true) {
+                    TcpClient client = await listener.AcceptTcpClientAsync();
+                    
+                    clients.Add(client);
+
+                    Invoke(new Action(() =>
+                    {
+                        listBox1.Items.Add("Client connected from: " + ((IPEndPoint)client.Client.RemoteEndPoint).Address);
+                    }));
+                    
+                    Thread thread = new Thread(() => StartaLäsning(client));
+                    thread.Start();
+                }
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                MessageBox.Show(e.Message);
             }
         }
 
         private async void StartaLäsning(TcpClient client)
         {
-            byte[] inData = new byte[1024];
+            try
+            {
+                byte[] inData = new byte[1024];
 
+                await client.GetStream().ReadAsync(inData, 0, inData.Length);
 
-
-            string x = DateTime.Now.ToString() + Encoding.UTF8.GetString(inData, 0, inData.Length);
-            listBox1.Items.Add(x);
-            byte[] data = Encoding.UTF8.GetBytes(x);
-            await client.GetStream().WriteAsync(data, 0, data.Length);
-            StartaLäsning(client);
+                string x = DateTime.Now.ToString() + Encoding.UTF8.GetString(inData, 0, inData.Length).Trim();
+                Invoke(new Action(() =>
+                {
+                    listBox1.Items.Add(x);
+                    listBox1.Update();
+                }));
+                byte[] data = Encoding.UTF8.GetBytes(x);
+                foreach (TcpClient tcpClient in clients)
+                {
+                    await tcpClient.GetStream().WriteAsync(data, 0, data.Length);
+                }
+                StartaLäsning(client);
+            }
+            catch (Exception e)
+            {
+                Invoke(new Action(() =>
+                {
+                    listBox1.Items.Add("Client disconnected from: " + ((IPEndPoint)client.Client.RemoteEndPoint).Address);
+                }));
+            }
         }
     }
 }
