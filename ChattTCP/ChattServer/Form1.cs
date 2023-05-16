@@ -63,25 +63,48 @@ namespace ChattServer
 
                 await client.GetStream().ReadAsync(inData, 0, inData.Length);
 
-                string x = DateTime.Now.ToString() + Encoding.UTF8.GetString(inData, 0, inData.Length).Trim();
-                Invoke(new Action(() =>
+                string data = Encoding.UTF8.GetString(inData);
+
+                string[] strings = data.Split('|');
+
+                if (strings[0] == "FILE")
                 {
-                    listBox1.Items.Add(x);
-                    listBox1.Update();
-                }));
-                byte[] data = Encoding.UTF8.GetBytes(x);
-                foreach (TcpClient tcpClient in clients)
-                {
-                    await tcpClient.GetStream().WriteAsync(data, 0, data.Length);
+                    Invoke(new Action(() =>
+                    {
+                        listBox1.Items.Add("***FILE***");
+                        listBox1.Items.Add(strings[2]);
+                    }));
+
+                    foreach (TcpClient tcpClient in clients)
+                    {
+                        await tcpClient.GetStream().WriteAsync(inData, 0, inData.Length);
+                    }
                 }
+                else
+                {
+                    string x = DateTime.Now.ToString() + Encoding.UTF8.GetString(inData, 0, inData.Length).Trim();
+                    Invoke(new Action(() =>
+                    {
+                        listBox1.Items.Add(x);
+                        listBox1.Update();
+                    }));
+                    byte[] message = Encoding.UTF8.GetBytes(x);
+                    foreach (TcpClient tcpClient in clients)
+                    {
+                        await tcpClient.GetStream().WriteAsync(message, 0, message.Length);
+                    }
+                }
+
                 StartaLäsning(client);
             }
-            catch
+            catch(Exception ex)
             {
                 Invoke(new Action(() =>
                 {
                     listBox1.Items.Add("Client disconnected from: " + ((IPEndPoint)client.Client.RemoteEndPoint).Address);
+                    listBox1.Items.Add(ex.Message);
                 }));
+
             }
         }
     }
