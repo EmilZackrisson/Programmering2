@@ -34,16 +34,17 @@ namespace ChattServer
         {
             try
             {
-                while (true) {
+                while (true)
+                {
                     TcpClient client = await listener.AcceptTcpClientAsync();
-                    
+
                     clients.Add(client);
 
                     Invoke(new Action(() =>
                     {
                         listBox1.Items.Add("Client connected from: " + ((IPEndPoint)client.Client.RemoteEndPoint).Address);
                     }));
-                    
+
                     Thread thread = new Thread(() => StartaLäsning(client));
                     thread.Start();
                 }
@@ -75,7 +76,7 @@ namespace ChattServer
                 }
                 StartaLäsning(client);
             }
-            catch (Exception e)
+            catch
             {
                 Invoke(new Action(() =>
                 {

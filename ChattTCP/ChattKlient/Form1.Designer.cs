@@ -38,6 +38,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tbxUsername = new System.Windows.Forms.TextBox();
             this.btnApplyUsername = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.btnSendFile = new System.Windows.Forms.Button();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.SuspendLayout();
             // 
             // tbxIp
@@ -126,11 +129,26 @@
             this.btnApplyUsername.UseVisualStyleBackColor = true;
             this.btnApplyUsername.Click += new System.EventHandler(this.btnApplyUsername_Click);
             // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // btnSendFile
+            // 
+            this.btnSendFile.Location = new System.Drawing.Point(13, 410);
+            this.btnSendFile.Name = "btnSendFile";
+            this.btnSendFile.Size = new System.Drawing.Size(330, 23);
+            this.btnSendFile.TabIndex = 9;
+            this.btnSendFile.Text = "save";
+            this.btnSendFile.UseVisualStyleBackColor = true;
+            this.btnSendFile.Click += new System.EventHandler(this.btnSendFile_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(355, 421);
+            this.ClientSize = new System.Drawing.Size(355, 445);
+            this.Controls.Add(this.btnSendFile);
             this.Controls.Add(this.btnApplyUsername);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnSend);
@@ -161,6 +179,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tbxUsername;
         private System.Windows.Forms.Button btnApplyUsername;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Button btnSendFile;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }
 
