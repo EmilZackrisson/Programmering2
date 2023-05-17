@@ -16,7 +16,7 @@ namespace ChattServer
     public partial class Form1 : Form
     {
         TcpListener listener;
-        List<TcpClient> clients = new List<TcpClient>();
+        readonly List<TcpClient> clients = new List<TcpClient>();
         public Form1()
         {
             InitializeComponent();
@@ -77,6 +77,8 @@ namespace ChattServer
 
                     foreach (TcpClient tcpClient in clients)
                     {
+                        // Skickar inte tillbaka det till klienten som skickade filen
+                        if (tcpClient != client)
                         await tcpClient.GetStream().WriteAsync(inData, 0, inData.Length);
                     }
                 }
@@ -95,6 +97,7 @@ namespace ChattServer
                     }
                 }
 
+                if(client.Connected)
                 StartaLäsning(client);
             }
             catch(Exception ex)

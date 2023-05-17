@@ -35,11 +35,11 @@ namespace ChattKlient
 
         private void btnDisconnect_Click(object sender, EventArgs e)
         {
+            client.Close();
             btnConnect.Enabled = true;
             btnDisconnect.Enabled = false;
             panel1.BackColor = Color.Red;
             tbxIp.Enabled = true;
-            client.Close();
 
             DialogResult dialogResult = MessageBox.Show("Close program? If no, the program will not work anymore.", "Close program?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
@@ -48,14 +48,7 @@ namespace ChattKlient
 
         private void btnConnect_Click(object sender, EventArgs e)
         {
-            if (!client.Connected)
-            {
-                StartaAnslutning();
-                btnConnect.Enabled = false;
-                btnDisconnect.Enabled = true;
-                tbxIp.Enabled = false;
-                panel1.BackColor = Color.Green;
-            }
+            StartaAnslutning();
         }
 
         public async void StartaAnslutning()
@@ -65,10 +58,17 @@ namespace ChattKlient
                 IPAddress adress = IPAddress.Parse(tbxIp.Text);
                 await client.ConnectAsync(adress, port);
             }
-            catch
+            catch (Exception ex)
             {
+                ShowErrorMessage($"Kunde inte ansluta. \n {ex.Message}");
             }
             stream = client.GetStream();
+
+            btnConnect.Enabled = false;
+            btnDisconnect.Enabled = true;
+            tbxIp.Enabled = false;
+            panel1.BackColor = Color.Green;
+
             Thread readStream = new Thread(() => ReadStream(stream));
             readStream.Start();
         }
@@ -82,9 +82,7 @@ namespace ChattKlient
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.ToString());
-                throw;
-
+                ShowErrorMessage(e.Message);
             }
         }
 
@@ -116,14 +114,15 @@ namespace ChattKlient
                             listBox1.Items.Add(data.Trim());
                         }));
                     }
-
-
                 }
+            }
+            catch (ObjectDisposedException e)
+            {
+                Console.WriteLine("Caught: {0}", e.Message);
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message);
-                throw;
+                ShowErrorMessage(e.Message);
             }
         }
 
@@ -136,7 +135,6 @@ namespace ChattKlient
                 btnApplyUsername.Enabled = false;
                 tbxUsername.Enabled = false;
             }
-
         }
 
         private void btnSendFile_Click(object sender, EventArgs e)
@@ -145,38 +143,42 @@ namespace ChattKlient
             DialogResult result = openFileDialog1.ShowDialog();
 
             if(result == DialogResult.OK) SendFile(openFileDialog1);
-
-
         }
 
-        public void SendFile(OpenFileDialog dialog)
+        public async void SendFile(OpenFileDialog dialog)
         {
             try
             {
                 string filename = dialog.FileName;
+                string safeFilename = dialog.SafeFileName;
 
-                byte[] fileInBytes = File.ReadAllBytes(filename);
+                //byte[] fileInBytes = File.ReadAllBytes(filename);
 
-                string fileInBase64 = Convert.ToBase64String(fileInBytes);
+                byte[] result;
 
-                string output = "FILE|" + filename + "|" + fileInBase64;
-
-                byte[] data = Encoding.UTF8.GetBytes(output);
-
-                var a=client.GetStream().WriteAsync(data, 0, data.Length);
-                while (!a.IsCompleted)
+                using (FileStream SourceStream = File.Open(filename, FileMode.Open))
                 {
-                    Thread.Sleep(1);
+                    result = new byte[SourceStream.Length];
+                    await SourceStream.ReadAsync(result, 0, (int)SourceStream.Length);
                 }
 
-                listBox1.Items.Add("Klart");
+                    string fileInBase64 = Convert.ToBase64String(result);
+
+                    string output = "FILE|" + safeFilename + "|" + fileInBase64;
+
+                    byte[] data = Encoding.UTF8.GetBytes(output);
+
+                    await client.GetStream().WriteAsync(data, 0, data.Length);
+
+                    listBox1.Items.Add("Klart");
+                
+
+                
 
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message);
-                throw;
-
+                ShowErrorMessage(e.Message);
             }
         }
 
@@ -192,27 +194,52 @@ namespace ChattKlient
                 byte[] fileInBytes = Convert.FromBase64String(base64EncodedFile);
 
                 saveFileDialog1.FileName = filename;
+                saveFileDialog1.DefaultExt = filename.Split('.').Last();
 
-                Invoke(new Action(() =>
+                Invoke(new Action(async () =>
                 {
                     DialogResult result = saveFileDialog1.ShowDialog();
 
                     if (result == DialogResult.OK)
                     {
-                        File.Create(filename).Dispose();
-                        File.WriteAllBytes(saveFileDialog1.FileName, fileInBytes);
-                    }
-                }));
+                        //File.Create(filename).Dispose();
+                        //File.WriteAllBytes(saveFileDialog1.FileName, fileInBytes);
 
-                
+
+                        try
+                        {
+                            using (FileStream SourceStream = File.Open(saveFileDialog1.FileName, FileMode.OpenOrCreate))
+                            {
+                                if (!SourceStream.CanWrite)
+                                {
+                                    ShowErrorMessage("Kan inte skriva filen");
+                                    return;
+                                }
+                                SourceStream.Seek(0, SeekOrigin.End);
+                                await SourceStream.WriteAsync(fileInBytes, 0, fileInBytes.Length);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            ShowErrorMessage(ex.Message);
+                        }
+                    }
+                }));                
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.ToString());
-                throw;
-
+                ShowErrorMessage(e.Message);
             }
+        }
 
-        }       
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        public void ShowErrorMessage(string error)
+        {
+            MessageBox.Show($"Error: {error}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
     }
 }

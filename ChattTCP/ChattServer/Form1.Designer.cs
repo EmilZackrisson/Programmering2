@@ -33,10 +33,11 @@
             // 
             // listBox1
             // 
+            this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(13, 34);
+            this.listBox1.Location = new System.Drawing.Point(5, 5);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(310, 394);
+            this.listBox1.Size = new System.Drawing.Size(330, 440);
             this.listBox1.TabIndex = 0;
             // 
             // Form1
@@ -46,6 +47,7 @@
             this.ClientSize = new System.Drawing.Size(340, 450);
             this.Controls.Add(this.listBox1);
             this.Name = "Form1";
+            this.Padding = new System.Windows.Forms.Padding(5);
             this.Text = "Chatt Server";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
